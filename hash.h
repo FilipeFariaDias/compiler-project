@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define HASH_SIZE = 997
+#define HASH_SIZE 997
 
 typedef struct hash_node{
     int type;

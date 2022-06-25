@@ -5,7 +5,7 @@ HASH_NODE*Table[HASH_SIZE];
 void hashInit(void){
     int i;
 
-    for(i = 0; i < HASH_SIZE){
+    for(i = 0; i < HASH_SIZE; i++){
         Table[i] = 0;
     }
 }
