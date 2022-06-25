@@ -9,6 +9,7 @@
 %}
 
 special_chars [\-\;\(\)\[\]\{\}\+\.\/\<\>\&\|\~]
+identifier [A-Za-z_]
 
 %%
 
@@ -31,6 +32,8 @@ special_chars [\-\;\(\)\[\]\{\}\+\.\/\<\>\&\|\~]
 
 
 {special_chars} { return yytext[0]; }
+
+{identifier} { hashInsert(yytext, TK_IDENTIFIER); return TK_IDENTIFIER; }
 
 
 %%
