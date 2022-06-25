@@ -465,9 +465,10 @@ char *yytext;
     #include "tokens.h"
 
     int lineNumber = 1;
+    int Running = 1;
 
-#line 470 "lex.yy.c"
 #line 471 "lex.yy.c"
+#line 472 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -684,10 +685,10 @@ YY_DECL
 		}
 
 	{
-#line 10 "scanner.l"
+#line 11 "scanner.l"
 
 
-#line 691 "lex.yy.c"
+#line 692 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -746,55 +747,55 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 12 "scanner.l"
+#line 13 "scanner.l"
 { return KW_CHAR; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 13 "scanner.l"
+#line 14 "scanner.l"
 { return KW_INT; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 14 "scanner.l"
+#line 15 "scanner.l"
 { return KW_FLOAT; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 15 "scanner.l"
+#line 16 "scanner.l"
 { return KW_IF; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 16 "scanner.l"
+#line 17 "scanner.l"
 { return KW_ELSE; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 17 "scanner.l"
+#line 18 "scanner.l"
 { return KW_WHILE; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 18 "scanner.l"
+#line 19 "scanner.l"
 { return KW_READ; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 19 "scanner.l"
+#line 20 "scanner.l"
 { return KW_PRINT; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 20 "scanner.l"
+#line 21 "scanner.l"
 { return KW_RETURN; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 22 "scanner.l"
+#line 23 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 798 "lex.yy.c"
+#line 799 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1799,12 +1800,27 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 22 "scanner.l"
+#line 23 "scanner.l"
 
 
+#include "main.c"
 
 int getLineNumber(void){
     return lineNumber;
+}
+
+int isRunning(void){
+    return Running;
+}
+
+
+void initMe(void){
+    hashInit();
+}
+
+int yywrap(){
+    Running = 0;
+    return 1;
 }
 
 

@@ -4,6 +4,7 @@
     #include "tokens.h"
 
     int lineNumber = 1;
+    int Running = 1;
 
 %}
 
@@ -19,11 +20,35 @@
 "print"         { return KW_PRINT; }
 "return"        { return KW_RETURN; }
 
+
+"<-"          { return ASSIGNMENT; }
+"<="          { return OPERATOR_LE; }
+">="          { return OPERATOR_GE; }
+"=="          { return OPERATOR_EQ; }
+"!="          { return OPERATOR_DIF; }
+
+
+
 %%
 
+#include "main.c"
 
 int getLineNumber(void){
     return lineNumber;
+}
+
+int isRunning(void){
+    return Running;
+}
+
+
+void initMe(void){
+    hashInit();
+}
+
+int yywrap(){
+    Running = 0;
+    return 1;
 }
 
 
