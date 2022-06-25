@@ -8,6 +8,8 @@
 
 %}
 
+special_chars [\-\;\(\)\[\]\{\}\+\.\/\<\>\&\|\~]
+
 %%
 
 "char"          { return KW_CHAR; }
@@ -27,6 +29,8 @@
 "=="          { return OPERATOR_EQ; }
 "!="          { return OPERATOR_DIF; }
 
+
+{special_chars} { return yytext[0]; }
 
 
 %%
