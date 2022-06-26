@@ -10,6 +10,10 @@
 
 special_chars [\-\;\(\)\[\]\{\}\+\.\/\<\>\&\|\~]
 identifier [A-Za-z_]
+char \'(\\.|[^\\])\'
+string \"([^"\\\n]|\\.)*\"
+integer [+|-]?[0-9]+
+float {integer}\,[0=9]+
 
 %%
 
@@ -34,6 +38,17 @@ identifier [A-Za-z_]
 {special_chars} { return yytext[0]; }
 
 {identifier} { hashInsert(yytext, TK_IDENTIFIER); return TK_IDENTIFIER; }
+
+{char} { hashInsert(yytext, LIT_CHAR); return LIT_CHAR; }
+
+{string} { hashInsert(yytext, LIT_STRING); return LIT_STRING; }
+
+{integer} { hashInsert(yytext, LIT_INTEGER); return LIT_INTEGER; }
+
+{float} { hashInsert(yytext, LIT_FLOAT); return LIT_FLOAT; }
+
+
+
 
 
 %%
