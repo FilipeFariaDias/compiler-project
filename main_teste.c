@@ -51,7 +51,7 @@ int main(int argc, char** argv){
    			case LIT_INTEGER: fprintf(stderr, "LIT_INTEGER na linha %d. - tok: %d \n", getLineNumber(), tok); break;
    			case LIT_FLOAT: fprintf(stderr, "LIT_FLOAT na linha %d. - tok: %d \n", getLineNumber(), tok); break;
 			case LIT_CHAR: fprintf(stderr, "LIT_CHAR na linha %d. - tok: %d \n", getLineNumber(), tok); break;
-            case LIT_STRING: fprintf(stderr, "LIT_STRING na linha %d. - tok: %d \n", getLineNumber(), tok); break;
+            		case LIT_STRING: fprintf(stderr, "LIT_STRING na linha %d. - tok: %d \n", getLineNumber(), tok); break;
    			case TOKEN_ERROR: fprintf(stderr, "TOKEN_ERROR na linha %d. - tok: %d \n", getLineNumber(), tok); break;
 			default: fprintf(stderr, "Caracter especial na linha %d. - tok: %d \n", getLineNumber(), tok); break;
 		}
