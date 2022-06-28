@@ -1,7 +1,7 @@
 %{
     #include <stdio.h>
-    #include "hash.c"
     #include "tokens.h"
+    #include "hash.c"
 
     int lineNumber = 1;
     int Running = 1;
@@ -12,8 +12,8 @@ special_chars [\-\;\(\)\[\]\{\}\+\.\/\<\>\&\|\~]
 identifier [A-Za-z_]
 char \'(\\.|[^\\])\'
 string \"([^"\\\n]|\\.)*\"
+float [+|-]?[0-9]*\,[0-9]+
 integer [+|-]?[0-9]+
-float {integer}\,[0=9]+
 
 %x COMMENT
 
@@ -32,8 +32,8 @@ float {integer}\,[0=9]+
  /* Literals */
 {char} { hashInsert(yytext, LIT_CHAR); return LIT_CHAR; }
 {string} { hashInsert(yytext, LIT_STRING); return LIT_STRING; }
-{integer} { hashInsert(yytext, LIT_INTEGER); return LIT_INTEGER; }
 {float} { hashInsert(yytext, LIT_FLOAT); return LIT_FLOAT; }
+{integer} { hashInsert(yytext, LIT_INTEGER); return LIT_INTEGER; }
 
  /* Composite operators */
 "<-" { return ASSIGNMENT; }
