@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "hash.h"
 
 HASH_NODE*Table[HASH_SIZE];
