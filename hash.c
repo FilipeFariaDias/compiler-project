@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "hash.h"
 
 HASH_NODE*Table[HASH_SIZE];
@@ -23,7 +25,13 @@ int hashAddress(char *text){
 }
 
 HASH_NODE *hashFind(char *text){
-    return 0;
+    int address = hashAddress(text);
+    hash_node* node;
+    for(node = Table[address]; node != NULL; node = node->next){
+        if(strcmp(text, node->text) == 0)
+            return node;
+    }
+    return NULL;
 }
 
 HASH_NODE *hashInsert(char *text, int type){
