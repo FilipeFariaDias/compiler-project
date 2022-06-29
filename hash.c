@@ -28,6 +28,9 @@ HASH_NODE *hashInsert(char *text, int type){
     HASH_NODE *newnode;
     int address = hashAddress(text);
 
+    if((newnode = hashFind(text)) != 0)
+        return newnode;
+
     newnode = (HASH_NODE*) calloc(1, sizeof(HASH_NODE));
     newnode->type = type;
     newnode->text = (char*) calloc(strlen(yytext) + 1, sizeof(char));
