@@ -40,7 +40,7 @@ HASH_NODE *hashInsert(char *text, int type){
 }
 
 HASH_NODE *hashFind(char *text){
-    address = hashAddress(text);
+    int address = hashAddress(text);
     HASH_NODE* node;
     for(node = Table[address]; node != NULL; node = node->next){
         if(strcmp(text, node->text) == 0)
