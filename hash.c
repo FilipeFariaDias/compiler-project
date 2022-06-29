@@ -23,12 +23,22 @@ int hashAddress(char *text){
 }
 
 HASH_NODE *hashFind(char *text){
-    return 0;
+    int address = hashAddress(text);
+    HASH_NODE* node;
+
+    for(node = Table[address]; node != NULL; node = node->next){
+        if(strcmp(text, node->text) == 0)
+            return node;
+    }
+    return NULL;
 }
 
 HASH_NODE *hashInsert(char *text, int type){
     HASH_NODE *newnode;
     int address = hashAddress(text);
+
+    if((newnode = hashFind(text)) != 0)
+        return newnode;
 
     newnode = (HASH_NODE*) calloc(1, sizeof(HASH_NODE));
     newnode->type = type;
