@@ -24,16 +24,6 @@ int hashAddress(char *text){
     return address - 1;
 }
 
-HASH_NODE *hashFind(char *text){
-    int address = hashAddress(text);
-    hash_node* node;
-    for(node = Table[address]; node != NULL; node = node->next){
-        if(strcmp(text, node->text) == 0)
-            return node;
-    }
-    return NULL;
-}
-
 HASH_NODE *hashInsert(char *text, int type){
     HASH_NODE *newnode;
     int address = hashAddress(text);
@@ -47,6 +37,16 @@ HASH_NODE *hashInsert(char *text, int type){
     Table[address] = newnode;
 
     return newnode;
+}
+
+HASH_NODE *hashFind(char *text){
+    address = hashAddress(text);
+    HASH_NODE* node;
+    for(node = Table[address]; node != NULL; node = node->next){
+        if(strcmp(text, node->text) == 0)
+            return node;
+    }
+    return NULL;
 }
 
 void hashPrint(void){
