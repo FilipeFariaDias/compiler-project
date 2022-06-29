@@ -9,7 +9,7 @@
 %}
 
 special_chars [\-\;\(\)\[\]\{\}\+\.\/\<\>\&\|\~]
-identifier [A-Za-z_]
+identifier [A-Za-z_]+
 char \'(\\.|[^\\])\'
 string \"([^"\\\n]|\\.)*\"
 float [+|-]?[0-9]*\,[0-9]+
