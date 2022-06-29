@@ -15,3 +15,4 @@ lex.yy.c: scanner.l
 	
 clean:
 	rm -f *.o lex.yy.c lex.yy.h etapa1
+
