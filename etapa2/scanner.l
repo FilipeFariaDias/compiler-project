@@ -13,7 +13,6 @@
 
     int lineNumber = 1;
     int Running = 1;
-
 %}
 
 special_chars [\-\;\(\)\[\]\{\}\+\.\/\<\>\&\|\~]
@@ -99,4 +98,3 @@ int yywrap(){
     Running = 0;
     return 1;
 }
-
