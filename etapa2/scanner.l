@@ -7,7 +7,7 @@
 
     #include <stdio.h>
     #include "y.tab.h"
-    #include "hash.h"
+    #include "hash.c"
     
     int yyparse();
 
