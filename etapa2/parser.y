@@ -99,7 +99,7 @@ cmd:
 	| bloco
 	| TK_IDENTIFIER ASSIGNMENT exp
 	| TK_IDENTIFIER '[' exp ']' ASSIGNMENT exp
-	| KW_READ TK_IDENTIFIER
+	| cmdRead
 	| KW_PRINT l_print
 	| KW_RETURN exp
 	| KW_IF '(' exp ')' cmd else cmd 
@@ -109,7 +109,11 @@ cmd:
 else:
 	| KW_ELSE cmd
 	;
-			
+
+cmdRead: KW_READ TK_IDENTIFIER
+	| KW_READ TK_IDENTIFIER '[' exp ']'
+	;
+
 exp: TK_IDENTIFIER	
 	| TK_IDENTIFIER '[' exp ']'
 	| TK_IDENTIFIER '(' argumento ')'
