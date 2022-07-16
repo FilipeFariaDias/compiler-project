@@ -49,7 +49,7 @@
 programa 	            : lista_declaracoes
 	 		            ;
 
-lista_declaracoes 	    : declaracoes l_declaracoes
+lista_declaracoes 	    : declaracoes declaracoes
 		  	            |
 		  	            ;
 		
