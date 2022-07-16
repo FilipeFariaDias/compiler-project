@@ -96,8 +96,8 @@ comando_fim:
 
 cmd:
 	| bloco
-	| TK_IDENTIFIER '<-' exp
-	| TK_IDENTIFIER '[' exp ']' '<-' exp
+	| TK_IDENTIFIER ASSIGNMENT exp
+	| TK_IDENTIFIER '[' exp ']' ASSIGNMENT exp
 	| KW_READ TK_IDENTIFIER
 	| KW_PRINT l_print
 	| KW_RETURN exp

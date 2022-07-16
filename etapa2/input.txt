@@ -1,7 +1,10 @@
 int a(2);
+int e(0);
 int c(4);
 int b[23]' ';
 int d[10] 1 2   3
 4 ;
 int alou(){}
-int aaa(char b int c ){return b}
+int aaa(char b int c){
+    e <- 3
+}
