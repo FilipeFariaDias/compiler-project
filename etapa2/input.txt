@@ -7,4 +7,5 @@ int d[10] 1 2   3
 int alou(){}
 int aaa(char b int c){
     e <- 3
+    int g(4)
 }
