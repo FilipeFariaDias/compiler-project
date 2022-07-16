@@ -70,6 +70,7 @@ literal: LIT_INTEGER
 			
 inicia_vetor: ' '
 	| literal elemento_vetor
+	|
 	;
 			
 elemento_vetor: 
@@ -103,7 +104,6 @@ cmd:
 	| KW_RETURN exp
 	| KW_IF '(' exp ')' cmd else cmd 
 	| KW_WHILE '(' exp ')' cmd
-	|
 	;
 
 else:
