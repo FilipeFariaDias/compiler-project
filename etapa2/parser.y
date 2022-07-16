@@ -55,7 +55,7 @@ lista_declaracoes: declaracoes lista_declaracoes
 		
 declaracoes: tipo TK_IDENTIFIER '(' literal ')' ';'		
 	| tipo TK_IDENTIFIER '[' LIT_INTEGER ']' inicia_vetor ';'
-	| tipo TK_IDENTIFIER '(' parametro ')' bloco ';'
+	| tipo TK_IDENTIFIER '(' parametro ')' bloco
 	; 
 
 tipo: KW_CHAR	     	
@@ -70,20 +70,15 @@ literal: LIT_INTEGER
 			
 inicia_vetor: ' '
 	| literal elemento_vetor
-	| ' '
-	| ';'
 	;
 			
 elemento_vetor: 
 	| literal elemento_vetor
 	;
 			
-parametro: 
-	| parametro parametro_fim
-	;
-
-parametro_fim:
-	| ' ' param parametro_fim
+parametro: ' ' param parametro
+	| param parametro
+	|
 	;
 
 param: tipo TK_IDENTIFIER
@@ -98,7 +93,7 @@ comando: cmd comando_fim
 comando_fim:
 	| ';' cmd comando_fim
 	;
-			
+
 cmd:
 	| bloco
 	| TK_IDENTIFIER '<-' exp
@@ -124,10 +119,10 @@ exp: TK_IDENTIFIER
 	| exp '/' exp
 	| exp '<' exp
 	| exp '>' exp 
-	| exp 'OPERATOR_EQ' exp
-	| exp 'OPERATOR_GE' exp
-	| exp 'OPERATOR_LE' exp
-	| exp 'OPERATOR_DIF' exp
+	| exp OPERATOR_EQ exp
+	| exp OPERATOR_GE exp
+	| exp OPERATOR_LE exp
+	| exp OPERATOR_DIF exp
 	| exp '&' exp
 	| exp '|' exp
 	| exp '~' exp
@@ -152,6 +147,7 @@ prints_fim:
 elemento_prints: LIT_STRING
 	| exp
 	;
+
 			
 %%
 
