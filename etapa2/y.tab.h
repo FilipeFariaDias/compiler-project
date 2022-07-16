@@ -68,7 +68,7 @@ extern int yydebug;
     LIT_FLOAT = 274,
     LIT_CHAR = 275,
     LIT_STRING = 276,
-    TOKEN_ERROR290 = 277
+    TOKEN_ERROR = 277
   };
 #endif
 /* Tokens.  */
@@ -91,7 +91,7 @@ extern int yydebug;
 #define LIT_FLOAT 274
 #define LIT_CHAR 275
 #define LIT_STRING 276
-#define TOKEN_ERROR290 277
+#define TOKEN_ERROR 277
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

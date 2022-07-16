@@ -6,7 +6,7 @@
     #define SYMBOL_IDENTIFIER 	7
 
     #include <stdio.h>
-    #include "y.tab.h"
+    #include "y.tab.c"
     #include "hash.c"
     
     int yyparse();

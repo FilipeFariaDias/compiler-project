@@ -37,7 +37,7 @@
 
 %token TOKEN_ERROR
 
-%left OPERATOR_LE, OPERATOR_GE, OPERATOR_EQ, OPERATOR_DIF, '<', '>'
+%left OPERATOR_LE OPERATOR_GE OPERATOR_EQ OPERATOR_DIF '<' '>'
 %left '+' '-' 
 %left '.' '/'
 %left '&' '|' '~'
@@ -49,7 +49,7 @@
 programa: lista_declaracoes
 	;
 
-lista_declaracoes: declaracoes l_declaracoes
+lista_declaracoes: declaracoes lista_declaracoes
 	|
 	;
 		
@@ -104,7 +104,7 @@ cmd:
 	| TK_IDENTIFIER '<-' exp
 	| TK_IDENTIFIER '[' exp ']' '<-' exp
 	| KW_READ TK_IDENTIFIER
-	| KW_PRINT prints
+	| KW_PRINT l_print
 	| KW_RETURN exp
 	| KW_IF '(' exp ')' cmd else cmd 
 	| KW_WHILE '(' exp ')' cmd
