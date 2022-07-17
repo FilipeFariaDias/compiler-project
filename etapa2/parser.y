@@ -53,7 +53,7 @@ lista_declaracoes: declaracoes lista_declaracoes
 	|
 	;
 		
-declaracoes: tipo TK_IDENTIFIER 'ASSIGNMENT' literal ';'		
+declaracoes: tipo TK_IDENTIFIER '(' literal ')' ';'		
 	| tipo TK_IDENTIFIER '[' LIT_INTEGER ']' inicia_vetor ';'
 	| tipo TK_IDENTIFIER '(' parametro ')' bloco
 	; 
