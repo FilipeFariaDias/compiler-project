@@ -134,24 +134,15 @@ exp: TK_IDENTIFIER
 	| '(' exp ')'
 	;
 			
-argumento: exp argumento_fim
-	| 
-	;
-			
-argumento_fim: ' ' 
-	| exp argumento_fim
+argumento: exp argumento
+	| ' ' argumento
 	|
 	;
 			
-l_print: elemento_prints prints_fim
-	;
-			
-prints_fim: 
-	| ',' elemento_prints prints_fim
-	;
-			
-elemento_prints: LIT_STRING
-	| exp
+l_print: LIT_STRING l_print
+	| exp l_print
+	| ' ' l_print
+	|
 	;
 
 			
