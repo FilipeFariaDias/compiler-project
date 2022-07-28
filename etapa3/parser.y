@@ -47,10 +47,10 @@
 
 %%
 
-programa: lista_declaracoes
+programa: lista_declaracoes						{root=$$;astree_print(0, root);}
 	;
 
-lista_declaracoes: declaracoes lista_declaracoes
+lista_declaracoes: declaracoes lista_declaracoes			 {$$=astree_create(AST_LDEC, 0, $1, $2, 0, 0);}
 	|
 	;
 		
