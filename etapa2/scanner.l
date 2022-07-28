@@ -1,4 +1,8 @@
+
+
 %{
+//Alunos: Filipe Faria Dias - 271423
+//        Germano Girondi - 288701
     #define SYMBOL_LIT_INTEGER	1
     #define SYMBOL_LIT_FLOAT 	2
     #define SYMBOL_LIT_CHAR 	3
@@ -6,7 +10,7 @@
     #define SYMBOL_IDENTIFIER 	7
 
     #include <stdio.h>
-    #include "y.tab.h"
+    #include "y.tab.c"
     #include "hash.c"
     
     int yyparse();
@@ -19,8 +23,8 @@ special_chars [\-\;\(\)\[\]\{\}\+\.\/\<\>\&\|\~]
 identifier [A-Za-z_]+
 char \'(\\.|[^\\])\'
 string \"([^"\\\n]|\\.)*\"
-float [+|-]?[0-9]*\,[0-9]+
-integer [+|-]?[0-9]+
+float [0-9]*\,[0-9]+
+integer [0-9]+
 
 %x COMMENT
 

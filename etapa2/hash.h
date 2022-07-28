@@ -1,3 +1,5 @@
+//Alunos: Filipe Faria Dias - 271423
+//        Germano Girondi - 288701
 
 #ifndef HASH_HEADER
 #define HASH_HEADER

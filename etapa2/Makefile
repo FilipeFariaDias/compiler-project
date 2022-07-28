@@ -1,23 +1,21 @@
-etapa2: y.tab.o lex.yy.o hash.o main.o
-	gcc -o etapa2 y.tab.o lex.yy.o hash.o main.o
+##Alunos: Filipe Faria Dias - 271423
+##       Germano Girondi - 288701
 
-main.o: main.c
-	gcc -c main.c
+#
+# UFRGS - Compiladores B - Marcelo Johann - 2022/1 - Etapa 2
+#
+# Makefile for single compiler call
+# All source files must be included from code embedded in scanner.l
+# In our case, you probably need #include "hash.c" at the beginning
+# and #include "main.c" in the last part of the scanner.l
+#
 
-hash.o: hash.c
-	gcc -c hash.c
-
-y.tab.o: y.tab.c
-	gcc -c y.tab.c
-
+etapa2: y.tab.c lex.yy.c 
+	gcc -o etapa2 lex.yy.c
 y.tab.c: parser.y
-	yacc -d -v parser.y
-
-lex.yy.o: lex.yy.c
-	gcc -c lex.yy.c
-
-lex.yy.c: scanner.l
-	flex --header-file=lex.yy.h scanner.l
+	yacc -d parser.y
+lex.yy.c: scanner.l 
+	lex scanner.l
 
 clean:
 	rm -f *.o etapa2 lex.yy.c lex.yy.h y.tab.c y.tab.h y.output
