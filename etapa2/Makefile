@@ -1,5 +1,8 @@
+##Alunos: Filipe Faria Dias - 271423
+##       Germano Girondi - 288701
+
 #
-# UFRGS - Compiladores B - Marcelo Johann - 2020/ERE - Etapa 2
+# UFRGS - Compiladores B - Marcelo Johann - 2022/1 - Etapa 2
 #
 # Makefile for single compiler call
 # All source files must be included from code embedded in scanner.l

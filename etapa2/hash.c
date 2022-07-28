@@ -1,3 +1,6 @@
+//Alunos: Filipe Faria Dias - 271423
+//        Germano Girondi - 288701
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

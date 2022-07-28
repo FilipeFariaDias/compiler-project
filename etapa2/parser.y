@@ -1,5 +1,8 @@
-%{
 
+
+%{
+//Alunos: Filipe Faria Dias - 271423
+//        Germano Girondi - 288701
    #include <stdio.h>
    #include <stdlib.h>
    #include <string.h>
@@ -68,8 +71,7 @@ literal: LIT_INTEGER
 	| LIT_CHAR
 	;
 			
-inicia_vetor: ' '
-	| literal elemento_vetor
+inicia_vetor: literal elemento_vetor
 	|
 	;
 			
@@ -77,8 +79,7 @@ elemento_vetor:
 	| literal elemento_vetor
 	;
 			
-parametro: ' ' param parametro
-	| param parametro
+parametro: param parametro
 	|
 	;
 
@@ -135,13 +136,11 @@ exp: TK_IDENTIFIER
 	;
 			
 argumento: exp argumento
-	| ' ' argumento
 	|
 	;
 			
 l_print: LIT_STRING l_print
 	| exp l_print
-	| ' ' l_print
 	|
 	;
 
