@@ -1,7 +1,7 @@
-#include "hash.h"
-#include "ast.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "hash.h"
+#include "ast.h"
 
 AST* astCreate(int type, HASH_NODE* symbol, AST* son0, AST* son1, AST* son2, AST* son3){
     AST *node = calloc(1, sizeof(AST));

@@ -1,14 +1,11 @@
 %{
-
-   #include <stdio.h>
-   #include <stdlib.h>
-   #include <string.h>
+	
    #include "hash.h"
    #include "ast.h"
 	
    AST *astFinal;
-   int yylex();
    int yyerror();
+   int yylex();
    extern int getLineNumber();
 
 %}
@@ -172,8 +169,8 @@ l_print: LIT_STRING l_print							{ $$ = astCreate(AST_SYMBOL, $1, $2, 0, 0, 0);
 			
 %%
 
-int yyerror(){
-
-	fprintf(stderr, "Erro na linha %d\n", getLineNumber());
+int yyerror()
+{
+	fprintf(stderr, "Erro na linha %d. \n", getLineNumber());
 	exit(3);
 }			

@@ -5,13 +5,10 @@
     #define SYMBOL_LIT_STRING 	4
     #define SYMBOL_IDENTIFIER 	7
 
-    #include <stdio.h>
-    #include "hash.c"
+    #include "hash.h"
     #include "ast.h"
-    #include "y.tab.c"
+    #include "y.tab.h"
     
-    int yyparse();
-
     int lineNumber = 1;
     int Running = 1;
 %}

@@ -8,10 +8,9 @@ extern FILE* yyin;
 extern FILE* file();
 extern int isRunning();
 extern int getLineNumber();
+extern AST * astFinal;
 extern int yyparse();
 extern void initMe();
-extern void hashPrint();
-extern AST * astFinal;
 
 int main(int argc, char *argv[]){
 
