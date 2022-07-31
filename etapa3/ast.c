@@ -30,14 +30,14 @@ void astPrint(int level, AST *node){
     case AST_DECVAR: fprintf(stderr, "AST_DECVAR"); break;
     case AST_DECVEC: fprintf(stderr, "AST_DECVEC"); break;
     case AST_DECFUNC: fprintf(stderr, "AST_DECFUNC"); break;
-    case AST_TPBYTE: fprintf(stderr, "AST_TPBYTE"); break;
+    case AST_TPCHAR: fprintf(stderr, "AST_TPCHAR"); break;
     case AST_TPINT: fprintf(stderr, "AST_TPINT"); break;
     case AST_TPFLOAT: fprintf(stderr, "AST_TPFLOAT"); break;
     case AST_SYMBOL: fprintf(stderr, "AST_SYMBOL"); break;
+    case AST_VECSIZE: fprintf(stderr, "AST_VECSIZE"); break;
     case AST_VECINIT: fprintf(stderr, "AST_VECINIT"); break;
     case AST_VECELEMENTS: fprintf(stderr, "AST_VECELEMENTS"); break;
     case AST_PARAMINIT: fprintf(stderr, "AST_PARAMINIT"); break;
-    case AST_PARAMLST: fprintf(stderr, "AST_PARAMLST"); break;
     case AST_PARAM: fprintf(stderr, "AST_PARAM"); break;
     case AST_BLOCK: fprintf(stderr, "AST_BLOCK"); break;
     case AST_CMDLSTINIT: fprintf(stderr, "AST_CMDLSTINIT"); break;
@@ -45,17 +45,17 @@ void astPrint(int level, AST *node){
     case AST_ATTR: fprintf(stderr, "AST_ATTR"); break;
     case AST_VECATTR: fprintf(stderr, "AST_VECATTR"); break;
     case AST_READ: fprintf(stderr, "AST_READ"); break;
+    case AST_AST_READINDEX: fprintf(stderr, "AST_READINDEX"); break;
     case AST_PRINT: fprintf(stderr, "AST_PRINT"); break;
     case AST_RETURN: fprintf(stderr, "AST_RETURN"); break;
-    case AST_IF: fprintf(stderr, "AST_IF"); break;
-    case AST_LOOP: fprintf(stderr, "AST_LOOP"); break;
+    case AST_WHILE: fprintf(stderr, "AST_WHILE"); break;
     case AST_IFELSE: fprintf(stderr, "AST_IFELSE"); break;
-    case AST_LEAP: fprintf(stderr, "AST_LEAP"); break;
+    case AST_ELSE: fprintf(stderr, "AST_ELSE"); break;
     case AST_VEC: fprintf(stderr, "AST_VEC"); break;
     case AST_FUNC: fprintf(stderr, "AST_FUNC"); break;
     case AST_SUM: fprintf(stderr, "AST_SUM"); break;
     case AST_DEC: fprintf(stderr, "AST_DEC"); break;
-    case AST_MUL: fprintf(stderr, "AST_MUL"); break;
+    case AST_DOT: fprintf(stderr, "AST_DOT"); break;
     case AST_DIV: fprintf(stderr, "AST_DIV"); break;
     case AST_LESS: fprintf(stderr, "AST_LESS"); break;
     case AST_GREAT: fprintf(stderr, "AST_GREAT"); break;
@@ -67,9 +67,7 @@ void astPrint(int level, AST *node){
     case AST_OR: fprintf(stderr, "AST_OR"); break;
     case AST_NOT: fprintf(stderr, "AST_NOT"); break;
     case AST_PAREN: fprintf(stderr, "AST_PAREN"); break;
-    case AST_ARGLSTINIT: fprintf(stderr, "AST_ARGLSTINIT"); break;
-    case AST_ARGLST: fprintf(stderr, "AST_ARGLST"); break;
-    case AST_PRINTLSTINIT: fprintf(stderr, "AST_PRINTLSTINIT"); break;
+    case AST_ARGUMENT: fprintf(stderr, "AST_ARGUMENT"); break;
     case AST_PRINTLST: fprintf(stderr, "AST_PRINTLST");  break;
   }
 
@@ -118,8 +116,8 @@ void decompileAST(AST *node, FILE *file){
       fprintf(file, ";\n");
       break;
 
-    case AST_TPBYTE :
-      fprintf(file, "byte");
+    case AST_TPCHAR :
+      fprintf(file, "char");
       break;
 
     case AST_TPINT :
@@ -135,6 +133,13 @@ void decompileAST(AST *node, FILE *file){
       break;
 
     case AST_VECINIT :
+      fprintf(file, ": ");
+      decompileAST(node->sons[0], file);
+      fprintf(file, " ");
+      decompileAST(node->sons[1], file);
+      break;
+
+    case AST_VECSIZE :
       fprintf(file, ": ");
       decompileAST(node->sons[0], file);
       fprintf(file, " ");
@@ -196,6 +201,13 @@ void decompileAST(AST *node, FILE *file){
     case AST_READ :
       fprintf(file, "read %s", node->symbol->text);
       break;
+    case AST_READINDEX :
+      fprintf(file, "read index %s", node->symbol->text);
+      fprintf(file, "[");
+      decompiladorAST(node->son[0],file_out); 
+      fprintf(file_out,"]"); 	
+      decompiladorAST(node->son[1],file_out);
+      break;
 
     case AST_PRINT :
       fprintf(file, "print ");
@@ -207,31 +219,26 @@ void decompileAST(AST *node, FILE *file){
       decompileAST(node->sons[0], file);
       break;
 
-    case AST_IF :
-      fprintf(file, "if(");
-      decompileAST(node->sons[0], file);
-      fprintf(file, ") then \n");
-      decompileAST(node->sons[1], file);
-      break;
-
-    case AST_LOOP :
-      fprintf(file, "loop(");
+    case AST_WHILE :
+      fprintf(file, "while(");
       decompileAST(node->sons[0], file);
       fprintf(file, ")");
       decompileAST(node->sons[1], file);
       break;
 
     case AST_IFELSE :
-      fprintf(file, "if(");
-      decompileAST(node->sons[0], file);
-      fprintf(file, ") then \n");
-      decompileAST(node->sons[1], file);
-      fprintf(file, "else\n");
-      decompileAST(node->sons[2], file);
+      fprintf(file_out,"if("); 
+      decompiladorAST(node->son[0],file_out); 
+      fprintf(file_out," "); 
+      fprintf(file_out,"cmd "); 
+      decompiladorAST(node->son[1],file_out); 
+      fprintf(file_out,"else "); 
+      decompiladorAST(node->son[2],file_out); 
       break;
 
-    case AST_LEAP :
-      fprintf(file, "leap");
+    case AST_ELSE :
+      fprintf(file, "else ");
+      decompileAST(node->sons[0], file);
       break;
 
     case AST_VEC :
@@ -258,9 +265,9 @@ void decompileAST(AST *node, FILE *file){
       decompileAST(node->sons[1], file);
       break;
 
-    case AST_MUL :
+    case AST_DOT :
       decompileAST(node->sons[0], file);
-      fprintf(file, " * ");
+      fprintf(file, " . ");
       decompileAST(node->sons[1], file);
       break;
 
@@ -329,18 +336,7 @@ void decompileAST(AST *node, FILE *file){
       fprintf(file, ")");
       break;
 
-    case AST_ARGLSTINIT :
-      decompileAST(node->sons[0], file);
-      decompileAST(node->sons[1], file);
-      break;
-
-    case AST_ARGLST :
-      fprintf(file, ", ");
-      decompileAST(node->sons[0], file);
-      decompileAST(node->sons[1], file);
-      break;
-
-    case AST_PRINTLSTINIT :
+    case AST_ARGUMENT :
       decompileAST(node->sons[0], file);
       decompileAST(node->sons[1], file);
       break;

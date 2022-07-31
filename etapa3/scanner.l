@@ -1,4 +1,6 @@
-#define SYMBOL_LIT_INTEGER	1
+{%
+
+    #define SYMBOL_LIT_INTEGER	1
     #define SYMBOL_LIT_FLOAT 	2
     #define SYMBOL_LIT_CHAR 	3
     #define SYMBOL_LIT_STRING 	4
@@ -6,7 +8,7 @@
 
     #include <stdio.h>
     #include "hash.c"
-    #include "astree.h"
+    #include "ast.h"
     #include "y.tab.c"
     
     int yyparse();
@@ -52,7 +54,7 @@ integer [0-9]+
  /* Special characters */
 {special_chars} { return yytext[0]; }
 
- /* Idenifier */
+ /* Identifier */
 {identifier} {yylval.symbol = hashInsert(yytext, TK_IDENTIFIER); return TK_IDENTIFIER; }
 
  /* White space and tab*/

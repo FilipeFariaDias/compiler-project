@@ -1,5 +1,5 @@
-etapa3: main.o y.tab.o lex.yy.o hash.o astree.o
-	gcc main.o y.tab.o lex.yy.o hash.o astree.o -o etapa3
+etapa3: main.o y.tab.o lex.yy.o hash.o ast.o
+	gcc main.o y.tab.o lex.yy.o hash.o ast.o -o etapa3
 
 main.o: main.c
 	gcc -c main.c
@@ -7,8 +7,8 @@ main.o: main.c
 hash.o: hash.c
 	gcc -c hash.c
 
-astree.o: astree.c
-	gcc -c astree.c
+ast.o: ast.c
+	gcc -c ast.c
 
 y.tab.o: y.tab.c
 	gcc -c y.tab.c
