@@ -1476,19 +1476,19 @@ yyreduce:
 
   case 5:
 #line 81 "parser.y"
-                                                                { (yyval.ast) = astCreate(AST_DECVAR, (yyvsp[-5].ast), (yyvsp[-4].symbol), (yyvsp[-2].ast), 0, 0); }
+                                                                { (yyval.ast) = astCreate(AST_DECVAR, (yyvsp[-4].symbol), (yyvsp[-5].ast), (yyvsp[-2].ast), 0, 0); }
 #line 1481 "y.tab.c"
     break;
 
   case 6:
 #line 82 "parser.y"
-                                                                                { (yyval.ast) = astCreate(AST_DECVEC, (yyvsp[-6].ast), (yyvsp[-5].symbol), astCreate(AST_VECSIZE, (yyvsp[-3].symbol), 0, 0, 0, 0), (yyvsp[-1].ast), 0); }
+                                                                                { (yyval.ast) = astCreate(AST_DECVEC, (yyvsp[-5].symbol), (yyvsp[-6].ast), astCreate(AST_VECSIZE, (yyvsp[-3].symbol), 0, 0, 0, 0), (yyvsp[-1].ast), 0); }
 #line 1487 "y.tab.c"
     break;
 
   case 7:
 #line 83 "parser.y"
-                                                                                { (yyval.ast) = astCreate(AST_DECFUNC, (yyvsp[-5].ast), (yyvsp[-4].symbol), (yyvsp[-2].ast), (yyvsp[0].ast), 0); }
+                                                                                { (yyval.ast) = astCreate(AST_DECFUNC, (yyvsp[-4].symbol), (yyvsp[-5].ast), (yyvsp[-2].ast), (yyvsp[0].ast), 0); }
 #line 1493 "y.tab.c"
     break;
 
@@ -1566,7 +1566,7 @@ yyreduce:
 
   case 20:
 #line 108 "parser.y"
-                                                                { (yyval.ast) = astCreate(AST_PARAM, 0, (yyvsp[-1].ast), (yyvsp[0].symbol), 0, 0); }
+                                                                { (yyval.ast) = astCreate(AST_PARAM, (yyvsp[0].symbol), (yyvsp[-1].ast), 0, 0, 0); }
 #line 1571 "y.tab.c"
     break;
 

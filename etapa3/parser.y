@@ -78,9 +78,9 @@ lista_declaracoes: declaracoes lista_declaracoes			 { $$ = astCreate(AST_LDEC, 0
 	|														{ $$ = 0; }
 	;
 		
-declaracoes: tipo TK_IDENTIFIER '(' literal ')' ';'		{ $$ = astCreate(AST_DECVAR, $1, $2, $4, 0, 0); }
-	| tipo TK_IDENTIFIER '[' LIT_INTEGER ']' inicia_vetor ';' 		{ $$ = astCreate(AST_DECVEC, $1, $2, astCreate(AST_VECSIZE, $4, 0, 0, 0, 0), $6, 0); }
-	| tipo TK_IDENTIFIER '(' parametro ')' bloco				{ $$ = astCreate(AST_DECFUNC, $1, $2, $4, $6, 0); }
+declaracoes: tipo TK_IDENTIFIER '(' literal ')' ';'		{ $$ = astCreate(AST_DECVAR, $2, $1, $4, 0, 0); }
+	| tipo TK_IDENTIFIER '[' LIT_INTEGER ']' inicia_vetor ';' 		{ $$ = astCreate(AST_DECVEC, $2, $1, astCreate(AST_VECSIZE, $4, 0, 0, 0, 0), $6, 0); }
+	| tipo TK_IDENTIFIER '(' parametro ')' bloco				{ $$ = astCreate(AST_DECFUNC, $2, $1, $4, $6, 0); }
 	; 
 
 tipo: KW_CHAR	     		{ $$ = astCreate(AST_TPCHAR, 0, 0, 0, 0, 0); }
@@ -105,7 +105,7 @@ parametro: param parametro					{ $$ = astCreate(AST_PARAMINIT, 0, $1, $2, 0, 0);
 	|										{ $$ = 0; }
 	;
 
-param: tipo TK_IDENTIFIER					{ $$ = astCreate(AST_PARAM, 0, $1, $2, 0, 0); }
+param: tipo TK_IDENTIFIER					{ $$ = astCreate(AST_PARAM, $2, $1, 0, 0, 0); }
 	;
 
 bloco: '{' comando '}'						{ $$ = astCreate(AST_BLOCK, 0, $2, 0, 0, 0); }
