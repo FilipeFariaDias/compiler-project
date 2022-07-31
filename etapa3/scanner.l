@@ -1,5 +1,4 @@
-{%
-
+%{
     #define SYMBOL_LIT_INTEGER	1
     #define SYMBOL_LIT_FLOAT 	2
     #define SYMBOL_LIT_CHAR 	3

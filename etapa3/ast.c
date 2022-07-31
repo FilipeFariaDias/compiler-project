@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-AST* astCreate(int type, hash_node* symbol, AST* son0, AST* son1, AST* son2, AST* son3){
+AST* astCreate(int type, HASH_NODE* symbol, AST* son0, AST* son1, AST* son2, AST* son3){
     AST *node = calloc(1, sizeof(AST));
     node->type = type;
     node->symbol = symbol;
@@ -45,7 +45,7 @@ void astPrint(int level, AST *node){
     case AST_ATTR: fprintf(stderr, "AST_ATTR"); break;
     case AST_VECATTR: fprintf(stderr, "AST_VECATTR"); break;
     case AST_READ: fprintf(stderr, "AST_READ"); break;
-    case AST_AST_READINDEX: fprintf(stderr, "AST_READINDEX"); break;
+    case AST_READINDEX: fprintf(stderr, "AST_READINDEX"); break;
     case AST_PRINT: fprintf(stderr, "AST_PRINT"); break;
     case AST_RETURN: fprintf(stderr, "AST_RETURN"); break;
     case AST_WHILE: fprintf(stderr, "AST_WHILE"); break;
@@ -157,16 +157,10 @@ void decompileAST(AST *node, FILE *file){
       decompileAST(node->sons[1], file);
       break;
 
-    case AST_PARAMLST :
+    case AST_PARAM :
       fprintf(file, ", ");
       decompileAST(node->sons[0], file);
       decompileAST(node->sons[1], file);
-      break;
-
-    case AST_PARAM :
-      decompileAST(node->sons[0], file);
-      fprintf(file, " ");
-      fprintf(file, "%s", node->symbol->text);
       break;
 
     case AST_BLOCK :
@@ -204,9 +198,9 @@ void decompileAST(AST *node, FILE *file){
     case AST_READINDEX :
       fprintf(file, "read index %s", node->symbol->text);
       fprintf(file, "[");
-      decompiladorAST(node->son[0],file_out); 
-      fprintf(file_out,"]"); 	
-      decompiladorAST(node->son[1],file_out);
+      decompileAST(node->sons[0],file); 
+      fprintf(file,"]"); 	
+      decompileAST(node->sons[1],file);
       break;
 
     case AST_PRINT :
@@ -227,13 +221,13 @@ void decompileAST(AST *node, FILE *file){
       break;
 
     case AST_IFELSE :
-      fprintf(file_out,"if("); 
-      decompiladorAST(node->son[0],file_out); 
-      fprintf(file_out," "); 
-      fprintf(file_out,"cmd "); 
-      decompiladorAST(node->son[1],file_out); 
-      fprintf(file_out,"else "); 
-      decompiladorAST(node->son[2],file_out); 
+      fprintf(file,"if("); 
+      decompileAST(node->sons[0],file); 
+      fprintf(file," "); 
+      fprintf(file,"cmd "); 
+      decompileAST(node->sons[1],file); 
+      fprintf(file,"else "); 
+      decompileAST(node->sons[2],file); 
       break;
 
     case AST_ELSE :

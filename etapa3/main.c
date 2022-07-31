@@ -4,7 +4,7 @@
 #include "hash.h"
 
 extern FILE* yyin;
-extern FILE* out;
+//extern FILE* out;
 extern FILE* file();
 extern int isRunning();
 extern int getLineNumber();
@@ -26,10 +26,10 @@ int main(int argc, char *argv[]){
 		return 2;
 	}
   
-  if(!(out = fopen(argv[2], "w+"))){
-		fprintf(stderr,"Cannot open file %s\n",argv[2]);
-		return 2;
-	}
+	// if(!(out = fopen(argv[2], "w+"))){
+	// 		fprintf(stderr,"Cannot open file %s\n",argv[2]);
+	// 		return 2;
+	// 	}
 	
 	initMe();
 	
@@ -37,13 +37,13 @@ int main(int argc, char *argv[]){
   
 	//hashPrint();
 	
-  fprintf(stderr, "OK \n");
+ 	fprintf(stderr, "OK \n");
 
 	fprintf(stderr, "Not OK \n");
 
-	decompileAST(astFinal, out);
+	//decompileAST(astFinal, out);
 
-	fclose(out);
+	//fclose(out);
 
  return 0; 
 }

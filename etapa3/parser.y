@@ -6,8 +6,9 @@
    #include "hash.h"
    #include "ast.h"
 	
+   AST *astFinal;
    int yylex();
-   int yyerror(char *message);
+   int yyerror();
    extern int getLineNumber();
 
 %}
@@ -73,7 +74,7 @@
 
 %%
 
-programa: lista_declaracoes						{ root = $$; astPrint(0, root); }
+programa: lista_declaracoes						{ astFinal = $$; astPrint(0, astFinal); }
 	;
 
 lista_declaracoes: declaracoes lista_declaracoes			 { $$ = astCreate(AST_LDEC, 0, $1, $2, 0, 0); }
@@ -136,7 +137,7 @@ else: KW_ELSE cmd									{ $$ = astCreate(AST_RETURN, 0, $2, 0, 0, 0); }
 	;
 
 cmdRead: KW_READ TK_IDENTIFIER						{ $$ = astCreate(AST_READ, $2, 0, 0, 0, 0); }		
-	| KW_READ TK_IDENTIFIER '[' exp ']'				{ $$ = astCreate(AST_READ, $2, $4, 0, 0, 0); }	
+	| KW_READ TK_IDENTIFIER '[' exp ']'				{ $$ = astCreate(AST_READINDEX, $2, $4, 0, 0, 0); }	
 	;
 
 exp: TK_IDENTIFIER									{ $$ = astCreate(AST_SYMBOL, $1, 0, 0, 0, 0); }	
@@ -171,7 +172,7 @@ l_print: LIT_STRING l_print							{ $$ = astCreate(AST_SYMBOL, $1, $2, 0, 0, 0);
 			
 %%
 
-int yyerror(char *err){
+int yyerror(){
 
 	fprintf(stderr, "Erro na linha %d\n", getLineNumber());
 	exit(3);
