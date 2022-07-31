@@ -1,6 +1,9 @@
+#ifndef AST_HEADER
+#define AST_HEADER
 
-#ifndef ASTREE
-#define ASTREE
+#include "hash.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 #define MAX_SONS 4
 #define AST_LDEC 1
@@ -49,22 +52,18 @@
 #define AST_PRINTLSTINIT 44
 #define AST_PRINTLST 45
 
-#include "hash.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct astree
+typedef struct astnode
 {
     int type;
-    hash_node *symbol;
-    struct astree *sons[MAX_SONS];
-} astree_node;
+    HASH_NODE *symbol;
+    struct astnode *sons[MAX_SONS];
+} AST;
 
 
-astree_node* astree_create(int type, hash_node* symbol, astree_node* son0, astree_node* son1, astree_node* son2, astree_node* son3);
+AST* astCreate(int type, HASH_NODE* symbol, AST* son0, AST* son1, AST* son2, AST* son3);
 
-void astree_print(int level, astree_node *node);
+void astPrint(int level, AST *node);
 
-void uncompileAST(astree_node *root, FILE *file);
+void decompileAST(AST *root, FILE *file);
 
 #endif

@@ -1,22 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "astree.h"
+#include "ast.h"
+#include "hash.h"
 
 extern FILE* yyin;
+extern FILE* out;
 extern FILE* file();
 extern int isRunning();
 extern int getLineNumber();
 extern int yyparse();
 extern void initMe();
 extern void hashPrint();
-extern astree_node * getAST();
+extern AST * astFinal;
 
 int main(int argc, char *argv[]){
 
     int token;
 	
 	if(argc < 3){
-		fprintf(stderr,"Call: ./etapa2 nomearquivo\n");
+		fprintf(stderr,"Call: ./etapa3 nomearquivo\n");
 		return 1;
 	}
 	if(!(file(argv[1]))){
@@ -39,7 +41,7 @@ int main(int argc, char *argv[]){
 
 	fprintf(stderr, "Not OK \n");
 
-	uncompileAST(getAST(), out);
+	decompileAST(astFinal, out);
 
 	fclose(out);
 

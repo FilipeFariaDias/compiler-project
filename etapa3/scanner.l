@@ -5,9 +5,9 @@
     #define SYMBOL_IDENTIFIER 	7
 
     #include <stdio.h>
-    #include "y.tab.c"
     #include "hash.c"
     #include "astree.h"
+    #include "y.tab.c"
     
     int yyparse();
 
@@ -74,8 +74,6 @@ integer [0-9]+
 
 
 %%
-
-#include "main.c"
 
 void initMe(void){
     hashInit();
