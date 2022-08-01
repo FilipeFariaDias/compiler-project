@@ -123,14 +123,14 @@ cmd: TK_IDENTIFIER ASSIGNMENT exp					{ $$ = astCreate(AST_ATTR, $1, $3, 0, 0, 0
 	| cmdRead										{ $$ = $1; }
 	| KW_PRINT l_print								{ $$ = astCreate(AST_PRINT, 0, $2, 0, 0, 0); }
 	| KW_RETURN exp									{ $$ = astCreate(AST_RETURN, 0, $2, 0, 0, 0); }
+	| KW_IF '(' exp ')' cmd 						{ $$ = astCreate(AST_IF, 0, $3, $5, 0, 0); }
 	| KW_IF '(' exp ')' cmd else cmd 				{ $$ = astCreate(AST_IFELSE, 0, $3, $5, $6, $7); }
 	| KW_WHILE '(' exp ')' cmd						{ $$ = astCreate(AST_WHILE, 0, $3, $5, 0, 0); }
 	| bloco											{ $$ = $1; }
 	|												{ $$ = 0; }
 	;
 
-else: KW_ELSE cmd									{ $$ = astCreate(AST_RETURN, 0, $2, 0, 0, 0); }
-	| 												{ $$ = 0; }
+else: KW_ELSE cmd									{ $$ = astCreate(AST_ELSE, 0, $2, 0, 0, 0); }
 	;
 
 cmdRead: KW_READ TK_IDENTIFIER						{ $$ = astCreate(AST_READ, $2, 0, 0, 0, 0); }		

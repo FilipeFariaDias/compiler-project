@@ -50,6 +50,8 @@
 #define AST_PAREN 41
 #define AST_ARGUMENT 42
 #define AST_PRINTLST 43
+#define AST_IF 44
+
 
 typedef struct astnode
 {

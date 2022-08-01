@@ -38,8 +38,6 @@ int main(int argc, char *argv[]){
 	
  	fprintf(stderr, "OK \n");
 
-	fprintf(stderr, "Not OK \n");
-
 	decompileAST(astFinal, output);
 
 	fclose(output);

@@ -46,8 +46,7 @@ int main ()
     {
     print "Nao tem como isso...\n"
     }
-  else
-    print "OK!\n"; {{}}
+  else print "asasd OK!\n";
   }
 
 int incn (int x int n )
