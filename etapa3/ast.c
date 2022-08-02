@@ -260,8 +260,8 @@ void decompileAST(AST *node, FILE *file){
       break;
 
     case AST_VEC :
-      fprintf(file, "[");
       fprintf(file, "%s", node->symbol->text);
+      fprintf(file, "[");
       decompileAST(node->sons[0], file);
       fprintf(file, "]");
       break;

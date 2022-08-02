@@ -32,6 +32,7 @@ int main ()
     {
     i <- incn(i 1);
     a <- incn(a a);
+    b <- 2 + 3;
     };
 
   print "Incrementado algumas vezes a fica " (2+x)a "\n";
