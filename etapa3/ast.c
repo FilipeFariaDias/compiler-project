@@ -118,7 +118,7 @@ void decompileAST(AST *node, FILE *file){
       decompileAST(node->sons[1], file);
       fprintf(file, ")");      
       decompileAST(node->sons[2], file);
-      fprintf(file, ";\n");
+      fprintf(file, "\n");
       break;
 
     case AST_TPCHAR :
@@ -235,7 +235,7 @@ void decompileAST(AST *node, FILE *file){
       decompileAST(node->sons[0], file);
       fprintf(file, ")");
       decompileAST(node->sons[1], file);
-      fprintf(file, "\n");
+      fprintf(file, ";\n");
       break;
 
     case AST_IF :
@@ -243,6 +243,7 @@ void decompileAST(AST *node, FILE *file){
       decompileAST(node->sons[0],file); 
       fprintf(file,")"); 
       decompileAST(node->sons[1],file); 
+      fprintf(file,";"); 
       break;
 
     case AST_IFELSE :
@@ -363,7 +364,6 @@ void decompileAST(AST *node, FILE *file){
 
     case AST_PRINTLST :
       decompileAST(node->sons[0], file);
-      decompileAST(node->sons[1], file);
       break;
     default: 
       break;
