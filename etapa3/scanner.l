@@ -1,16 +1,14 @@
-#define SYMBOL_LIT_INTEGER	1
+%{
+    #define SYMBOL_LIT_INTEGER	1
     #define SYMBOL_LIT_FLOAT 	2
     #define SYMBOL_LIT_CHAR 	3
     #define SYMBOL_LIT_STRING 	4
     #define SYMBOL_IDENTIFIER 	7
 
-    #include <stdio.h>
-    #include "y.tab.c"
-    #include "hash.c"
-    #include "astree.h"
+    #include "hash.h"
+    #include "ast.h"
+    #include "y.tab.h"
     
-    int yyparse();
-
     int lineNumber = 1;
     int Running = 1;
 %}
@@ -52,7 +50,7 @@ integer [0-9]+
  /* Special characters */
 {special_chars} { return yytext[0]; }
 
- /* Idenifier */
+ /* Identifier */
 {identifier} {yylval.symbol = hashInsert(yytext, TK_IDENTIFIER); return TK_IDENTIFIER; }
 
  /* White space and tab*/
@@ -74,8 +72,6 @@ integer [0-9]+
 
 
 %%
-
-#include "main.c"
 
 void initMe(void){
     hashInit();
