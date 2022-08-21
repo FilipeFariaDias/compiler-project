@@ -32,7 +32,7 @@ int main(int argc, char *argv[]){
 	
 	yyparse();
   
-	//hashPrint();
+	hashPrint();
 	
 	decompileAST(astFinal, output);
 

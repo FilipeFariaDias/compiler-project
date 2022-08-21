@@ -72,7 +72,7 @@
 
 %%
 
-programa: lista_declaracoes						{ astFinal = $$; astPrint(0, astFinal); check_and_set_declarations(astFinal); }
+programa: lista_declaracoes						{ astFinal = $$; astPrint(0, astFinal); check_and_set_declarations(astFinal); hash_check_undeclared(); }
 	;
 
 lista_declaracoes: declaracoes lista_declaracoes			 { $$ = astCreate(AST_LDEC, 0, $1, $2, 0, 0); }

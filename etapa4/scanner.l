@@ -29,10 +29,10 @@ integer [0-9]+
 "return" { return KW_RETURN; }
 
  /* Literals */
-{char} {yylval.symbol = hashInsert(yytext, LIT_CHAR); return LIT_CHAR; }
-{string} {yylval.symbol = hashInsert(yytext, LIT_STRING); return LIT_STRING; }
-{float} {yylval.symbol = hashInsert(yytext, LIT_FLOAT); return LIT_FLOAT; }
-{integer} {yylval.symbol = hashInsert(yytext, LIT_INTEGER); return LIT_INTEGER; }
+{char} {yylval.symbol = hashInsert(yytext, SYMBOL_LIT_CHAR); return LIT_CHAR; }
+{string} {yylval.symbol = hashInsert(yytext, SYMBOL_LIT_STRING); return LIT_STRING; }
+{float} {yylval.symbol = hashInsert(yytext, SYMBOL_LIT_FLOAT); return LIT_FLOAT; }
+{integer} {yylval.symbol = hashInsert(yytext, SYMBOL_LIT_INTEGER); return LIT_INTEGER; }
 
  /* Composite operators */
 "<-" { return ASSIGNMENT; }
@@ -45,7 +45,7 @@ integer [0-9]+
 {special_chars} { return yytext[0]; }
 
  /* Identifier */
-{identifier} {yylval.symbol = hashInsert(yytext, TK_IDENTIFIER); return TK_IDENTIFIER; }
+{identifier} {yylval.symbol = hashInsert(yytext, SYMBOL_IDENTIFIER); return TK_IDENTIFIER; }
 
  /* White space and tab*/
 [ \t]

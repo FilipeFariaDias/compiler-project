@@ -1459,7 +1459,7 @@ yyreduce:
     {
   case 2:
 #line 75 "parser.y"
-                                                                        { astFinal = (yyval.ast); astPrint(0, astFinal); check_and_set_declarations(astFinal); }
+                                                                        { astFinal = (yyval.ast); astPrint(0, astFinal); check_and_set_declarations(astFinal); hash_check_undeclared(); }
 #line 1464 "y.tab.c"
     break;
 

@@ -829,22 +829,22 @@ case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
 #line 33 "scanner.l"
-{yylval.symbol = hashInsert(yytext, LIT_CHAR); return LIT_CHAR; }
+{yylval.symbol = hashInsert(yytext, SYMBOL_LIT_CHAR); return LIT_CHAR; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 34 "scanner.l"
-{yylval.symbol = hashInsert(yytext, LIT_STRING); return LIT_STRING; }
+{yylval.symbol = hashInsert(yytext, SYMBOL_LIT_STRING); return LIT_STRING; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 35 "scanner.l"
-{yylval.symbol = hashInsert(yytext, LIT_FLOAT); return LIT_FLOAT; }
+{yylval.symbol = hashInsert(yytext, SYMBOL_LIT_FLOAT); return LIT_FLOAT; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 36 "scanner.l"
-{yylval.symbol = hashInsert(yytext, LIT_INTEGER); return LIT_INTEGER; }
+{yylval.symbol = hashInsert(yytext, SYMBOL_LIT_INTEGER); return LIT_INTEGER; }
 	YY_BREAK
 /* Composite operators */
 case 14:
@@ -882,7 +882,7 @@ YY_RULE_SETUP
 case 20:
 YY_RULE_SETUP
 #line 49 "scanner.l"
-{yylval.symbol = hashInsert(yytext, TK_IDENTIFIER); return TK_IDENTIFIER; }
+{yylval.symbol = hashInsert(yytext, SYMBOL_IDENTIFIER); return TK_IDENTIFIER; }
 	YY_BREAK
 /* White space and tab*/
 case 21:
