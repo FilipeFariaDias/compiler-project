@@ -12,7 +12,7 @@ int getSemanticErrors();
 int isIdentifierAlreadyDeclared(AST *node);
 void updateDatatype(AST *node);
 
-int isByte(int datatype);
+int isChar(int datatype);
 int isInt(int datatype);
 int isFloat(int datatype);
 int isScalar(int datatype);
