@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "ast.h"
 #include "hash.h"
+#include "semantic.h"
 
 extern FILE* file();
 extern AST * astFinal;
