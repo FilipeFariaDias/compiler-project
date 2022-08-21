@@ -58,7 +58,21 @@ void hashPrint(void){
 
     for(i = 0; i < HASH_SIZE; ++i){
         for(node = Table[i]; node; node = node->next){
-            printf("Table[%d] has %s with type %d\n", i, node->text, node->type);
+            printf("Table[%d] has %s, type %d, datatype %d\n", i, node->text, node->type, node->datatype);
         }
     }
+}
+
+int hash_check_undeclared() {
+    int i;
+    int undeclared = 0;
+    HASH_NODE *node;
+    for(i = 0; i < HASH_SIZE; i++)
+        for(node = Table[i]; node; node = node->next)
+            if(node->type == SYMBOL_IDENTIFIER) {
+                fprintf(stderr, "SEMANTIC ERROR: identifier %s undeclared\n", node->text);
+                ++undeclared;
+            }
+
+    return undeclared;
 }
