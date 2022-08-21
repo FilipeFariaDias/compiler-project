@@ -3,7 +3,7 @@
 #include "hash.h"
 #include "ast.h"
 
-AST* astCreate(int type, HASH_NODE* symbol, AST* son0, AST* son1, AST* son2, AST* son3){
+AST* astCreate(int type, HASH_NODE* symbol, AST* son0, AST* son1, AST* son2, AST* son3, int lineNumber){
     AST *node = calloc(1, sizeof(AST));
     node->type = type;
     node->symbol = symbol;
@@ -11,6 +11,7 @@ AST* astCreate(int type, HASH_NODE* symbol, AST* son0, AST* son1, AST* son2, AST
     node->sons[1] = son1;
     node->sons[2] = son2;
     node->sons[3] = son3;
+    node->lineNumber = lineNumber;
 
     return node;
 }

@@ -57,11 +57,13 @@ typedef struct astnode
 {
     int type;
     HASH_NODE *symbol;
+    int datatype;
+    int lineNumber;
     struct astnode *sons[MAX_SONS];
 } AST;
 
 
-AST* astCreate(int type, HASH_NODE* symbol, AST* son0, AST* son1, AST* son2, AST* son3);
+AST* astCreate(int type, HASH_NODE* symbol, AST* son0, AST* son1, AST* son2, AST* son3, int lineNumber);
 
 void astPrint(int level, AST *node);
 

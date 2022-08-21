@@ -71,6 +71,22 @@ void updateDatatype(AST *node){
     }
 }
 
+int isChar(int datatype){
+    return (datatype == DATATYPE_CHAR);
+}
+            
+int isInt(int datatype){
+    return (datatype == DATATYPE_INT);
+}
+
+int isFloat(int datatype){
+    return (datatype == DATATYPE_FLOAT);
+}
+
+int isCompatible(int datatype1, int datatype2){
+    return (isChar(datatype1) && isInt(datatype2)) || (datatype1 == datatype2);
+}
+
 void check_undeclared(){
     SemanticErrors += hash_check_undeclared();
 }
