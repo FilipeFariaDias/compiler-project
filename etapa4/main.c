@@ -37,7 +37,7 @@ int main(int argc, char *argv[]){
 
 	if(getSemanticErrors() > 0){
 		fprintf(stderr, "Compilation Failure! Semantic Errors\n");
-		exit(4)
+		exit(4);
 	}
 
  	fprintf(stderr, "OK \n");
