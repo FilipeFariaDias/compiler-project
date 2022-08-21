@@ -12,4 +12,14 @@ int getSemanticErrors();
 int isIdentifierAlreadyDeclared(AST *node);
 void updateDatatype(AST *node);
 
+int isByte(int datatype);
+int isInt(int datatype);
+int isFloat(int datatype);
+int isScalar(int datatype);
+int isVector(int datatype);
+int isFunction(int datatype);
+--AST *findFunctionDeclaration(char * name, AST * node);
+--int isSameDatatype(int datatype1, int datatype2);
+--int isCompatible(int var, int atrib);
+
 #endif
