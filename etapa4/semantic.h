@@ -18,7 +18,7 @@ int isInt(int datatype);
 int isFloat(int datatype);
 int isVector(int datatype);
 int isFunction(int datatype);
-bool checkVecElements(AST * node, int datatype);
+int checkVecElements(AST * node, int datatype);
 int isCompatible(int datatype1, int datatype2);
 
 
