@@ -99,7 +99,7 @@ int isFloat(int datatype){
     return (datatype == DATATYPE_FLOAT);
 }
 
-int checkVecElements(astree_node * node, int datatype){	
+int checkVecElements(AST * node, int datatype){	
 	if(node != NULL){
 		if(!isDatatypeCompatible(node->sons[0]->symbol->datatype, datatype))
 			return 0;
