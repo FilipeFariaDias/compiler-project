@@ -1,6 +1,7 @@
 #include "semantic.h"
 #include "hash.h"
 #include "ast.h"
+#include <stdbool.h>
 
 int SemanticErrors = 0;
 
