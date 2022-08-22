@@ -60,14 +60,30 @@ void updateDatatype(AST *node){
         if(node->sons[0]->type == AST_TPINT) node->symbol->datatype = DATATYPE_INT;
         if(node->sons[0]->type == AST_TPFLOAT) node->symbol->datatype = DATATYPE_FLOAT;
         if(node->sons[0]->type == AST_TPCHAR) node->symbol->datatype = DATATYPE_CHAR;
+    }
+}
 
-        // switch(node->sons[0]->type){
-        //     case AST_TPINT:     node->symbol->datatype = DATATYPE_INT;      break;
-        //     case AST_TPFLOAT:   node->symbol->datatype = DATATYPE_FLOAT;    break;
-        //     case AST_TPCHAR:    node->symbol->datatype = DATATYPE_CHAR;     break;
-        //     default:
-        //         break;
-        // }
+void check_usage(AST *node){
+    int i;
+
+    if(node ==  0)
+        return;
+
+    switch(node->type){
+        case AST_DECVAR: 
+            if(node->symbol->type != SYMBOL_VARIABLE){
+                fprintf(stderr, "Semantic Error: Identifier %s should be numeric!\n", node->symbol->text);
+                ++SemanticErrors;
+            }
+            if(isInt(node->symbol->datatype) || isFloat(node->symbol->datatype) || isChar(node->symbol->datatype) && 
+                (node->sons[1]->symbol->type != SYMBOL_LIT_INTEGER && node->sons[1]->symbol->type != SYMBOL_LIT_FLOAT &&
+                 node->sons[1]->symbol->type != SYMBOL_LIT_CHAR)){
+                    fprintf(stderr, "Semantic Error: Identifier %s should be a integer, float or a character!\n", node->symbol->text);
+                    ++SemanticErrors;
+                 }
+            break;
+        default:
+            break;
     }
 }
 
@@ -81,10 +97,6 @@ int isInt(int datatype){
 
 int isFloat(int datatype){
     return (datatype == DATATYPE_FLOAT);
-}
-
-int isCompatible(int datatype1, int datatype2){
-    return (isChar(datatype1) && isInt(datatype2)) || (datatype1 == datatype2);
 }
 
 void check_undeclared(){

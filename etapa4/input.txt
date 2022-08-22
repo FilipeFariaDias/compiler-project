@@ -7,6 +7,7 @@ int i(1);
 int v[10] 'a' 0 0 0 0 0 0 0 0 0;
 int matrix[100]; 
 float f (2,5);
+int x ("10");
 
 \#
 This is a comment 
@@ -17,5 +18,3 @@ of multiple lines
 
 
 ## end of file
-  
-
