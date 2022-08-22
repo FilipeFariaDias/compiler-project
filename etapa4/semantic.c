@@ -1,7 +1,6 @@
 #include "semantic.h"
 #include "hash.h"
 #include "ast.h"
-#include <stdbool.h>
 
 int SemanticErrors = 0;
 
@@ -100,14 +99,14 @@ int isFloat(int datatype){
     return (datatype == DATATYPE_FLOAT);
 }
 
-bool checkVecElements(astree_node * node, int datatype){	
+int checkVecElements(astree_node * node, int datatype){	
 	if(node != NULL){
 		if(!isDatatypeCompatible(node->sons[0]->symbol->datatype, datatype))
-			return false;
+			return 0;
 		if(node->sons[1] != NULL)
 			return checkEveryVecElement(node->sons[1], datatype);
 	}
-	return true;
+	return 1;
 }
 
 int isCompatible(int datatype1, int datatype2){
