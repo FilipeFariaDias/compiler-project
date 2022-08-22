@@ -16,6 +16,8 @@ void updateDatatype(AST *node);
 int isChar(int datatype);
 int isInt(int datatype);
 int isFloat(int datatype);
-
+int isVector(int datatype);
+int isFunction(int datatype);
+bool checkVecElements(AST * node, int datatype);
 
 #endif
