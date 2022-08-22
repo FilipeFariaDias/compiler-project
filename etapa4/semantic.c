@@ -101,10 +101,10 @@ int isFloat(int datatype){
 
 int checkVecElements(AST * node, int datatype){	
 	if(node != NULL){
-		if(!isDatatypeCompatible(node->sons[0]->symbol->datatype, datatype))
+		if(!isCompatible(node->sons[0]->symbol->datatype, datatype))
 			return 0;
 		if(node->sons[1] != NULL)
-			return checkEveryVecElement(node->sons[1], datatype);
+			return checkVecElement(node->sons[1], datatype);
 	}
 	return 1;
 }
