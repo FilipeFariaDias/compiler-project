@@ -104,7 +104,7 @@ int checkVecElements(AST * node, int datatype){
 		if(!isCompatible(node->sons[0]->symbol->datatype, datatype))
 			return 0;
 		if(node->sons[1] != NULL)
-			return checkVecElement(node->sons[1], datatype);
+			return checkVecElements(node->sons[1], datatype);
 	}
 	return 1;
 }
