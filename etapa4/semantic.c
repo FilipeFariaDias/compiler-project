@@ -99,6 +99,20 @@ int isFloat(int datatype){
     return (datatype == DATATYPE_FLOAT);
 }
 
+bool checkVecElements(astree_node * node, int datatype){	
+	if(node != NULL){
+		if(!isDatatypeCompatible(node->sons[0]->symbol->datatype, datatype))
+			return false;
+		if(node->sons[1] != NULL)
+			return checkEveryVecElement(node->sons[1], datatype);
+	}
+	return true;
+}
+
+int isCompatible(int datatype1, int datatype2){
+    return (isChar(datatype1) && isInt(datatype2)) || (datatype1 == datatype2);
+}
+
 void check_undeclared(){
     SemanticErrors += hash_check_undeclared();
 }
