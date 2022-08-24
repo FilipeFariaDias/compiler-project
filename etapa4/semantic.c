@@ -1,6 +1,7 @@
 #include "semantic.h"
 #include "hash.h"
 #include "ast.h"
+#include <string.h>
 
 int SemanticErrors = 0;
 
@@ -82,6 +83,16 @@ void check_usage(AST *node){
                     ++SemanticErrors;
                  }
             break;
+        case AST_DECVEC:
+            if(!checkVecElements(node->sons[2], node->symbol->datatype)){
+                fprintf(stderr, "Semantic Error: invalid values type on %s vector initialization\n", node->symbol->text);
+                ++SemanticErrors;
+            }
+            if(!checkVecInit(node)){
+                fprintf(stderr, "Semantic Error: initialization number is not the same number of array elements %s\n", node->symbol->text);
+                ++SemanticErrors;
+            }
+            break;
         default:
             break;
     }
@@ -107,6 +118,21 @@ int checkVecElements(AST * node, int datatype){
 			return checkVecElements(node->sons[1], datatype);
 	}
 	return 1;
+}
+
+int checkVecInit(AST *node){
+    int length = atoi(node->sons[1]->symbol->text);
+    int elem_length = 0;
+    AST *elem_values = node->sons[2];
+
+    while(elem_values){
+        elem_length++;
+        elem_values = elem_values->sons[1];
+    }
+    if(elem_length != length)
+        return 0;
+
+    return 1;
 }
 
 int isCompatible(int datatype1, int datatype2){

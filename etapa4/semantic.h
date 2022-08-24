@@ -19,6 +19,7 @@ int isFloat(int datatype);
 int isVector(int datatype);
 int isFunction(int datatype);
 int checkVecElements(AST * node, int datatype);
+int checkVecInit(AST *node);
 int isCompatible(int datatype1, int datatype2);
 
 
