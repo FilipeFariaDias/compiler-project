@@ -84,14 +84,20 @@ void check_usage(AST *node){
                  }
             break;
         case AST_DECVEC:
+            if(!(isChar(isnode->sons[1]) || isInt(isnode->sons[1]))){
+                fprintf(stderr, "Semantic Error: invalid values type in vector index initialization %s\n", node->symbol->text);
+                ++SemanticErrors;
+            }
             if(!checkVecElements(node->sons[2], node->symbol->datatype)){
-                fprintf(stderr, "Semantic Error: invalid values type on %s vector initialization\n", node->symbol->text);
+                fprintf(stderr, "Semantic Error: invalid values type in vector elements initialization %s\n", node->symbol->text);
                 ++SemanticErrors;
             }
             if(!checkVecInit(node)){
                 fprintf(stderr, "Semantic Error: initialization number is not the same number of array elements %s\n", node->symbol->text);
                 ++SemanticErrors;
             }
+            break;
+        case AST_DECFUNC:
             break;
         default:
             break;
