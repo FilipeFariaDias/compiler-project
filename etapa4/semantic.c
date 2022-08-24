@@ -84,7 +84,7 @@ void check_usage(AST *node){
                  }
             break;
         case AST_DECVEC:
-            if(!(isChar(isnode->sons[1]) || isInt(isnode->sons[1]))){
+            if(!(isChar(node->sons[1]->symbol->datatype) || isInt(node->sons[1]->symbol->datatype))){
                 fprintf(stderr, "Semantic Error: invalid values type in vector index initialization %s\n", node->symbol->text);
                 ++SemanticErrors;
             }
@@ -98,6 +98,22 @@ void check_usage(AST *node){
             }
             break;
         case AST_DECFUNC:
+            break;
+        case AST_ATTR:
+            if(node->symbol->type != SYMBOL_VARIABLE){
+                fprintf(stderr, "Semantic Error: Attribuition has wrong identifier %s\n", node->symbol->text);
+                ++SemanticErrors;
+            }
+            if(!(isChar(node->symbol->datatype) || isFloat(node->symbol->datatype) || isInt(node->symbol->datatype)) &&
+                !(node->symbol->type != SYMBOL_LIT_INTEGER || node->symbol->type != SYMBOL_LIT_FLOAT ||
+                 node->symbol->type != SYMBOL_LIT_CHAR)){
+                    fprintf(stderr, "Semantic Error: Attribuition has incompatible types %s\n", node->symbol->text);
+                    ++SemanticErrors;
+                 }
+            else if(!(node->symbol->datatype == DATATYPE_BOOL && node->symbol->type == SYMBOL_LIT_BOOL)){
+                fprintf(stderr, "Semantic Error: Attribuition has incompatible types %s\n", node->symbol->text);
+                ++SemanticErrors;
+            }
             break;
         default:
             break;

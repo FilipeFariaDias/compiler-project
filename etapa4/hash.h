@@ -13,11 +13,13 @@
 #define SYMBOL_VARIABLE 	6
 #define SYMBOL_FUNCTION 	7
 #define SYMBOL_VECTOR    	8
+#define SYMBOL_LIT_BOOL  	13
 
 #define DATATYPE_INT        9
 #define DATATYPE_FLOAT      10
 #define DATATYPE_CHAR       11
 #define DATATYPE_STRING     12
+#define DATATYPE_BOOL       14
 
 #define HASH_SIZE 997
 
