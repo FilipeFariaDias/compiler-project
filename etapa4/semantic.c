@@ -101,18 +101,36 @@ void check_usage(AST *node){
             break;
         case AST_ATTR:
             if(node->symbol->type != SYMBOL_VARIABLE){
-                fprintf(stderr, "Semantic Error: Attribuition has wrong identifier %s\n", node->symbol->text);
+                fprintf(stderr, "Semantic Error: Attribuition has wrong identifier, should be a number %s\n", node->symbol->text);
                 ++SemanticErrors;
             }
             if(!(isChar(node->symbol->datatype) || isFloat(node->symbol->datatype) || isInt(node->symbol->datatype)) &&
-                !(node->symbol->type != SYMBOL_LIT_INTEGER || node->symbol->type != SYMBOL_LIT_FLOAT ||
-                 node->symbol->type != SYMBOL_LIT_CHAR)){
+                !(node->sons[0]->symbol->type != SYMBOL_LIT_INTEGER || node->sons[0]->symbol->type != SYMBOL_LIT_FLOAT ||
+                 node->sons[0]->symbol->type != SYMBOL_LIT_CHAR)){
                     fprintf(stderr, "Semantic Error: Attribuition has incompatible types %s\n", node->symbol->text);
                     ++SemanticErrors;
                  }
-            else if(!(node->symbol->datatype == DATATYPE_BOOL && node->symbol->type == SYMBOL_LIT_BOOL)){
+            else if(!(isBool(node->symbol->datatype) && node->sons[0]->symbol->type == SYMBOL_LIT_BOOL)){
                 fprintf(stderr, "Semantic Error: Attribuition has incompatible types %s\n", node->symbol->text);
                 ++SemanticErrors;
+            }
+            break;
+        case AST_VECATTR:
+            if(node->symbol->type != SYMBOL_VECTOR){
+                fprintf(stderr, "Semantic Error: Attribuition has wrong identifier, should be a vector %s\n", node->symbol->text);
+                ++SemanticErrors;
+            }
+            if((node->sons[0]->symbol->type == SYMBOL_LIT_BOOL && isBool(node->sons[0]->symbol->type)) ||
+                (node->sons[0]->symbol->type == SYMBOL_LIT_FLOAT && isFloat(node->sons[0]->symbol->type))){
+                    fprintf(stderr, "Semantic Error: Vector index should not be a boolean or a float %s\n", node->symbol->text);
+                     ++SemanticErrors;
+                }
+            if(node->sons[1] != NULL){
+                if((node->sons[1]->symbol->type == SYMBOL_LIT_BOOL && isBool(node->sons[1]->symbol->type)) ||
+                    (node->sons[1]->symbol->type == SYMBOL_LIT_FLOAT && isFloat(node->sons[1]->symbol->type))){
+                        fprintf(stderr, "Semantic Error: Vector attribution should not be a boolean or a float %s\n", node->symbol->text);
+                         ++SemanticErrors;
+                    }
             }
             break;
         default:
@@ -130,6 +148,10 @@ int isInt(int datatype){
 
 int isFloat(int datatype){
     return (datatype == DATATYPE_FLOAT);
+}
+
+int isBool(int datatype){
+    return (datatype == DATATYPE_BOOL);
 }
 
 int checkVecElements(AST * node, int datatype){	
