@@ -133,6 +133,20 @@ void check_usage(AST *node){
                     }
             }
             break;
+        case AST_PRINT:
+            if(node->sons[0] != NULL && node->sons[0]->symbol->type != SYMBOL_LIT_STRING){
+                fprintf(stderr, "Semantic Error: Print should only have string type %s\n", node->symbol->text);
+                ++SemanticErrors;
+            }
+            break;
+        case AST_IF:
+        case AST_IFELSE:
+        case AST_WHILE:
+            if(node->sons[0] != NULL && !(isBool(node->sons[0]->symbol->datatype))){
+                fprintf(stderr, "Semantic Error: Condition should be boolean\n");
+                ++SemanticErrors;
+            }
+            break;
         default:
             break;
     }
