@@ -23,5 +23,9 @@ int checkVecElements(AST * node, int datatype);
 int checkVecInit(AST *node);
 int isCompatible(int datatype1, int datatype2);
 
+/*
+AST * findFunctionDeclaration(char * name, AST * node);
+void validateFunction(AST * node);
+*/
 
 #endif
