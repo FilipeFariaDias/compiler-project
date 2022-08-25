@@ -193,6 +193,34 @@ int checkVecInit(AST *node){
     return 1;
 }
 
+/* Imagino que ajude na identificação de funções 
+
+AST* findFunctionDeclaration(char * name, AST * node){
+	if(node->symbol != NULL && node->type == AST_DECFUNC && strcmp(node->symbol->text, name) == 0)
+		return node;
+
+	for(int i = 0; i < MAX_SONS; i++){
+		if(node->sons[i] == NULL)
+			return NULL;
+		AST * finding = findFunctionDeclaration(name, node->sons[i]) ;
+		if(finding != NULL)
+			return finding;
+	}
+	return NULL;
+}
+
+void validateFunction(AST * node){
+	AST * declaration = findFunctionDeclaration(node->symbol->text, ROOT);
+    if(declaration == NULL){
+        fprintf(stderr, "Erro semantico na linha %d: Apenas funcoes podem ser chamadas\n", node->lineNumber);
+        SemanticErrors++;
+    }
+	else if(checkNumberOfArguments(node, declaration)){
+		compareCalledArguments(node->sons[0], declaration->sons[1]);					
+	}
+}
+*/
+
 int isCompatible(int datatype1, int datatype2){
     return (isChar(datatype1) && isInt(datatype2)) || (datatype1 == datatype2);
 }
