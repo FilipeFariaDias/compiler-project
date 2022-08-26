@@ -27,6 +27,7 @@ void check_and_set_declarations(AST *node){
         case AST_DECFUNC:
             if(!isIdentifierAlreadyDeclared(node)){
                 node->symbol->type = SYMBOL_FUNCTION;
+                node->symbol->params = countParams(node->sons[0]);
                 updateDatatype(node);
             }
             break;
@@ -77,7 +78,7 @@ void check_usage(AST *node){
                 ++SemanticErrors;
             }
             if(isInt(node->symbol->datatype) || isFloat(node->symbol->datatype) || isChar(node->symbol->datatype) && 
-                (node->sons[1]->symbol->type != SYMBOL_LIT_INTEGER && node->sons[1]->symbol->type != SYMBOL_LIT_FLOAT &&
+                (node->sons[1]->symbol->type != SYMBOL_LIT_INTEGER || node->sons[1]->symbol->type != SYMBOL_LIT_FLOAT ||
                  node->sons[1]->symbol->type != SYMBOL_LIT_CHAR)){
                     fprintf(stderr, "Semantic Error: Identifier %s should be a integer, float or a character!\n", node->symbol->text);
                     ++SemanticErrors;
@@ -147,6 +148,73 @@ void check_usage(AST *node){
                 ++SemanticErrors;
             }
             break;
+        case AST_VEC:
+            if(node->symbol->type != SYMBOL_VECTOR){
+                fprintf(stderr, "Semantic Error: Identifier %s should be a vector\n", node->symbol->text);
+                ++SemanticErrors;
+            }
+            if(!(isChar(node->sons[0]->symbol->datatype) || isInt(node->sons[0]->symbol->datatype) || 
+                (node->sons[0]->symbol->type != SYMBOL_LIT_INTEGER ||
+                 node->sons[0]->symbol->type != SYMBOL_LIT_CHAR))){
+                    fprintf(stderr, "Semantic Error: Invalid vector index\n");
+                    ++SemanticErrors;
+                 }
+            break;
+        case AST_FUNC:
+            if(node->symbol->type != SYMBOL_FUNCTION){
+                fprintf(stderr, "Semantic Error: Identifier %s should be a function\n", node->symbol->text);
+                ++SemanticErrors;
+            }
+            else if(node->symbol->params != countParams(node->sons[0])){
+                fprintf(stderr, "Semantic Error: Wrong number of parameters\n");
+                ++SemanticErrors;
+            }
+            break;
+        case AST_SUM:
+        case AST_DEC:
+        case AST_DOT:
+        case AST_DIV:
+        if(node->sons[0] != NULL && node->sons[1] != NULL){
+            if(!(isIntorFloat(node->sons[0])) || !(isIntorFloat(node->sons[1]))){
+                fprintf(stderr, "Semantic Error: Operands should be a number!\n");
+                ++SemanticErrors;
+            }
+        }
+            break;
+        case AST_LESS:
+        case AST_GREAT:
+        case AST_EQ:
+        case AST_GE:
+        case AST_LE:
+        case AST_DIF:
+        if(node->sons[0] != NULL && node->sons[1] != NULL){
+            if(!isIntCharorFloat(node->sons[0]) || !isIntCharorFloat(node->sons[1])){
+                fprintf(stderr, "Semantic Error: Operands should be a integer, float or char!\n");
+                ++SemanticErrors;
+            }
+        }
+            break;
+        case AST_AND:
+        case AST_OR:
+        if(node->sons[0] != NULL && node->sons[1] != NULL){
+            if(!(isBool(node->sons[0]->symbol->datatype) || node->sons[0]->symbol->type == SYMBOL_LIT_BOOL) || 
+                !(isBool(node->sons[1]->symbol->datatype) || node->sons[1]->symbol->type == SYMBOL_LIT_BOOL)){
+                fprintf(stderr, "Semantic Error: Operands should be boolean!\n");
+                ++SemanticErrors;
+            }
+        }
+            break;
+        case AST_NOT:
+        if(node->sons[0] != NULL){
+            if(!(isBool(node->sons[0]->symbol->datatype) || node->sons[0]->symbol->type == SYMBOL_LIT_BOOL)){
+                fprintf(stderr, "Semantic Error: Operand should be boolean!\n");
+                ++SemanticErrors;
+            }
+        }
+            break;
+        case AST_PAREN:
+            return check_usage(node->sons[0]);
+            break;
         default:
             break;
     }
@@ -166,6 +234,26 @@ int isFloat(int datatype){
 
 int isBool(int datatype){
     return (datatype == DATATYPE_BOOL);
+}
+
+int isIntorFloat(AST *node){
+    if(node->symbol->type == SYMBOL_LIT_INTEGER ||
+        node->symbol->type == SYMBOL_LIT_FLOAT ||
+        node->symbol->datatype == DATATYPE_INT ||
+        node->symbol->datatype == DATATYPE_FLOAT)
+        return 1;
+    return 0;
+}
+
+int isIntCharorFloat(AST *node){
+    if(node->symbol->type == SYMBOL_LIT_INTEGER ||
+        node->symbol->type == SYMBOL_LIT_FLOAT ||
+        node->symbol->type == SYMBOL_LIT_CHAR ||
+        node->symbol->datatype == DATATYPE_INT ||
+        node->symbol->datatype == DATATYPE_FLOAT ||
+        node->symbol->datatype == DATATYPE_CHAR)
+        return 1;
+    return 0;
 }
 
 int checkVecElements(AST * node, int datatype){	
@@ -191,6 +279,13 @@ int checkVecInit(AST *node){
         return 0;
 
     return 1;
+}
+
+int countParams(AST *node){
+    if(node == NULL)
+        return 0;
+    else 
+        return 1 + countParams(node->sons[1]);
 }
 
 /* Imagino que ajude na identificação de funções 

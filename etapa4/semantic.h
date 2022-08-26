@@ -17,11 +17,14 @@ int isChar(int datatype);
 int isInt(int datatype);
 int isFloat(int datatype);
 int isBool(int datatype);
+int isIntorFloat(AST *node);
+int isIntCharorFloat(AST *node);
 int isVector(int datatype);
 int isFunction(int datatype);
 int checkVecElements(AST * node, int datatype);
 int checkVecInit(AST *node);
 int isCompatible(int datatype1, int datatype2);
+int countParams(AST *node);
 
 /*
 AST * findFunctionDeclaration(char * name, AST * node);
