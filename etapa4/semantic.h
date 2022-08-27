@@ -6,6 +6,7 @@
 
 extern int SemanticErrors;
 
+void checkSemanticAnalysis(AST *node);
 void check_and_set_declarations(AST *node);
 void check_undeclared();
 void check_usage(AST *node);
@@ -25,10 +26,9 @@ int checkVecElements(AST * node, int datatype);
 int checkVecInit(AST *node);
 int isCompatible(int datatype1, int datatype2);
 int countParams(AST *node);
-
-/*
+void checkFunction(AST* funCall, AST *funDecNode);
 AST * findFunctionDeclaration(char * name, AST * node);
-void validateFunction(AST * node);
-*/
+void checkFuncReturn(AST *node, int funcType, AST *tail);
+
 
 #endif

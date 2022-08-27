@@ -4,6 +4,14 @@
 #include <string.h>
 
 int SemanticErrors = 0;
+AST *ROOT;
+
+void checkSemanticAnalysis(AST *node){
+    ROOT = node;
+    check_and_set_declarations(node);
+    check_undeclared();
+    check_usage(node);
+}
 
 void check_and_set_declarations(AST *node){
     int i;
@@ -27,7 +35,7 @@ void check_and_set_declarations(AST *node){
         case AST_DECFUNC:
             if(!isIdentifierAlreadyDeclared(node)){
                 node->symbol->type = SYMBOL_FUNCTION;
-                node->symbol->params = countParams(node->sons[0]);
+                node->symbol->params = countParams(node->sons[1]);
                 updateDatatype(node);
             }
             break;
@@ -99,6 +107,15 @@ void check_usage(AST *node){
             }
             break;
         case AST_DECFUNC:
+            if(node->sons[0] == NULL){
+                fprintf(stderr, "Semantic Error: Wrong function %s declaration\n", node->symbol->text);
+                ++SemanticErrors;
+            }
+            if(node->sons[2] == NULL){
+                fprintf(stderr, "Semantic Error: Wrong function %s declaration\n", node->symbol->text);
+                ++SemanticErrors;
+            }
+            checkFuncReturn(node, node->sons[0]->type, node->sons[2]->sons[0]);
             break;
         case AST_ATTR:
             if(node->symbol->type != SYMBOL_VARIABLE){
@@ -165,10 +182,15 @@ void check_usage(AST *node){
                 fprintf(stderr, "Semantic Error: Identifier %s should be a function\n", node->symbol->text);
                 ++SemanticErrors;
             }
-            else if(node->symbol->params != countParams(node->sons[0])){
+            else if(node->symbol->params != countParams(node->sons[1])){
                 fprintf(stderr, "Semantic Error: Wrong number of parameters\n");
                 ++SemanticErrors;
             }
+            AST *declaration;
+            if(node->symbol){
+                declaration = findFunctionDeclaration(node->symbol->text, ROOT);
+            }
+            checkFunction(node->sons[0], declaration->sons[0]);
             break;
         case AST_SUM:
         case AST_DEC:
@@ -288,7 +310,6 @@ int countParams(AST *node){
         return 1 + countParams(node->sons[1]);
 }
 
-/* Imagino que ajude na identificação de funções 
 
 AST* findFunctionDeclaration(char * name, AST * node){
 	if(node->symbol != NULL && node->type == AST_DECFUNC && strcmp(node->symbol->text, name) == 0)
@@ -304,17 +325,41 @@ AST* findFunctionDeclaration(char * name, AST * node){
 	return NULL;
 }
 
-void validateFunction(AST * node){
-	AST * declaration = findFunctionDeclaration(node->symbol->text, ROOT);
-    if(declaration == NULL){
-        fprintf(stderr, "Erro semantico na linha %d: Apenas funcoes podem ser chamadas\n", node->lineNumber);
-        SemanticErrors++;
-    }
-	else if(checkNumberOfArguments(node, declaration)){
-		compareCalledArguments(node->sons[0], declaration->sons[1]);					
-	}
+void checkFunction(AST* funCall, AST *funDecNode){
+    if(funCall == NULL || funDecNode == NULL)
+        return;
+     if(funCall->sons[0] != NULL && funDecNode->sons[0] != NULL){
+        if(isBool(funDecNode->sons[0]->symbol->datatype) && funCall->sons[0]->symbol->type != SYMBOL_LIT_BOOL){
+            fprintf(stderr, "Semantic Error: Parameters should be boolean!\n");
+            ++SemanticErrors;
+        }
+        else if(isInt(funDecNode->sons[0]->symbol->datatype) || 
+                isFloat(funDecNode->sons[0]->symbol->datatype) ||
+                isChar(funDecNode->sons[0]->symbol->datatype) && !isIntCharorFloat(funDecNode->sons[0])){
+                    fprintf(stderr, "Semantic Error: Parameters should be a number!\n");
+                    ++SemanticErrors;
+            }
+        checkFunction(funCall->sons[1], funDecNode->sons[1]);
+     }
 }
-*/
+
+void checkFuncReturn(AST *node, int funcType, AST *tail){
+    AST* head;
+    if(tail == NULL)
+        return;
+
+    head = tail->sons[0];
+
+    if(head->type == AST_RETURN && head != NULL){
+        if(isInt(funcType) || 
+            isFloat(funcType) ||
+            isChar(funcType) && !isIntCharorFloat(head->sons[0])){
+                fprintf(stderr, "Semantic Error: identifier should be a number!\n");
+                ++SemanticErrors;
+        }
+    }
+    checkFuncReturn(node, funcType, tail->sons[1]);
+}
 
 int isCompatible(int datatype1, int datatype2){
     return (isChar(datatype1) && isInt(datatype2)) || (datatype1 == datatype2);
