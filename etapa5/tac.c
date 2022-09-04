@@ -3,8 +3,17 @@
 #include "tac.h"
 
 
-TAC* tacCreate(int type, HASH_NODE *resultado, HASH_NODE *op1, HASH_NODE *op2){
+TAC* tacCreate(int type, HASH_NODE *res, HASH_NODE *op1, HASH_NODE *op2){
+    TAC *newtac = (TAC*) calloc(1, sizeof(TAC));
 
+    newtac->type = type;
+    newtac->res = res;
+    newtac->op1 = op1;
+    newtac->op2 = op2;
+
+    newtac->prev = 0;
+    newtac->next = 0;
+    return newtac;
 }
 void tacPrint(TAC *tac){
 
