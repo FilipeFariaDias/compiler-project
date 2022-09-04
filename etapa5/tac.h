@@ -4,6 +4,11 @@
 #include "hash.h"
 #include "ast.h"
 
+#define TAC_SYMBOL  1
+#define TAC_SUM     2
+#define TAC_DEC     3
+
+
 typedef struct tac_node{
     int type;
     HASH_NODE *res;

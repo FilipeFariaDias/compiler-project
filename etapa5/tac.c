@@ -17,6 +17,29 @@ TAC* tacCreate(int type, HASH_NODE *res, HASH_NODE *op1, HASH_NODE *op2){
 }
 void tacPrint(TAC *tac){
 
+    if(!tac)
+        return;
+    
+    fprintf(stderr, "TAC(");
+
+    switch(tac->type){
+        case TAC_SYMBOL:
+            fprintf(stderr, "TAC_SYMBOL");
+            break;
+        case TAC_SUM:
+            fprintf(stderr, "TAC_SUM");
+            break;
+        case TAC_DEC:
+            fprintf(stderr, "TAC_DEC");
+            break;
+        default:
+            fprintf(stderr, "TAC_UNKNOWN");
+            break;
+    }
+    fprintf(stderr, ", %s", (tac->res) ? tac->res->text : "0");
+    fprintf(stderr, ", %s", (tac->op1) ? tac->op1->text : "0");
+    fprintf(stderr, ", %s", (tac->op2) ? tac->op2->text : "0");
+    fprintf(stderr, ");\n");
 }
 void tacPrintBackwards(TAC *tac){
     if(tac == NULL)
