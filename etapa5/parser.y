@@ -181,3 +181,7 @@ int yyerror()
 	fprintf(stderr, "Erro na linha %d. \n", getLineNumber());
 	exit(3);
 }			
+
+tac* getTACs(){
+  return rewindTac(createTacs(ast, 0));
+}
