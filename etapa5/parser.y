@@ -76,7 +76,8 @@
 programa: lista_declaracoes						{ 
 													astFinal = $$; 
 													astPrint(0, astFinal); 
-													checkSemanticAnalysis(astFinal); 
+													checkSemanticAnalysis(astFinal);
+													tacPrintBackwards(generateCode($1));
 												}
 	;
 
