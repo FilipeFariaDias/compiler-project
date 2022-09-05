@@ -62,5 +62,24 @@ TAC* tacJoin(TAC *l1, TAC *l2){
 }
 
 TAC* generateCode(AST *node){
+    int i;
+    TAC *result = 0;
+    TAC *code[MAX_SONS];
 
+    if(!node)
+        return 0;
+
+    for(i = 0; i < MAX_SONS; i++)
+        code[i] = generateCode(node->sons[i]);
+
+    switch(node->type){
+        case AST_SYMBOL:
+            tacCreate(TAC_SYMBOL, node->symbol, 0, 0);
+            break;
+        default:
+            result = tacJoin(code[0], tacJoin(code[1], tacJoin(code[2], code[3])));
+            break;
+    }
+
+    return result;
 }

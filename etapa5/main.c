@@ -9,7 +9,6 @@ extern FILE* file();
 extern AST * astFinal;
 extern int yyparse();
 extern void initMe();
-extern tac * getTACs();
 
 int main(int argc, char *argv[]){
 
@@ -46,10 +45,6 @@ int main(int argc, char *argv[]){
  	fprintf(stderr, "OK \n");
 
 	fclose(output);
-	
-	fprintf(stderr, "Generating TACs:\n\n");
-	printAllTacs(getTACs());
-
 
  	exit(0); 
 }

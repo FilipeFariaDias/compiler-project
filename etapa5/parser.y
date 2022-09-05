@@ -182,6 +182,3 @@ int yyerror()
 	exit(3);
 }			
 
-tac* getTACs(){
-  return rewindTac(createTacs(ast, 0));
-}
