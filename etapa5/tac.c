@@ -74,7 +74,7 @@ TAC* generateCode(AST *node){
 
     switch(node->type){
         case AST_SYMBOL:
-            tacCreate(TAC_SYMBOL, node->symbol, 0, 0);
+            result = tacCreate(TAC_SYMBOL, node->symbol, 0, 0);
             break;
         default:
             result = tacJoin(code[0], tacJoin(code[1], tacJoin(code[2], code[3])));
