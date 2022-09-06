@@ -160,7 +160,7 @@ exp: TK_IDENTIFIER									{ $$ = astCreate(AST_SYMBOL, $1, 0, 0, 0, 0); }
 	| exp OPERATOR_DIF exp							{ $$ = astCreate(AST_DIF, 0, $1, $3, 0, 0); }
 	| exp '&' exp									{ $$ = astCreate(AST_AND, 0, $1, $3, 0, 0); }
 	| exp '|' exp									{ $$ = astCreate(AST_OR, 0, $1, $3, 0, 0); }
-	| '~' exp									{ $$ = astCreate(AST_NOT, 0, $2, 0, 0, 0); }
+	| '~' exp										{ $$ = astCreate(AST_NOT, 0, $2, 0, 0, 0); }
 	| '(' exp ')'									{ $$ = astCreate(AST_PAREN, 0, $2, 0, 0, 0); }
 	;
 			

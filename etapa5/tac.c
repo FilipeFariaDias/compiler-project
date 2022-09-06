@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "tac.h"
 
+TAC *binaryOperation(int opcode, TAC *code0, TAC *code1);
 
 TAC* tacCreate(int type, HASH_NODE *res, HASH_NODE *op1, HASH_NODE *op2){
     TAC *newtac = (TAC*) calloc(1, sizeof(TAC));
@@ -76,10 +77,57 @@ TAC* generateCode(AST *node){
         case AST_SYMBOL:
             result = tacCreate(TAC_SYMBOL, node->symbol, 0, 0);
             break;
+        case AST_SUM:
+            result = binaryOperation(TAC_SUM, code[0], code[1]);
+            break;
+	    case AST_DEC:
+            result = binaryOperation(TAC_DEC, code[0], code[1]);
+            break;
+	    case AST_DOT:
+            result = binaryOperation(TAC_DOT, code[0], code[1]);
+            break;
+	    case AST_DIV:
+            result = binaryOperation(TAC_DIV, code[0], code[1]);
+            break;
+	    case AST_LESS:
+            result = binaryOperation(TAC_LESS, code[0], code[1]);
+            break;
+	    case AST_GREAT:
+            result = binaryOperation(TAC_GREAT, code[0], code[1]);
+            break;
+	    case AST_EQ:
+            result = binaryOperation(TAC_EQ, code[0], code[1]);
+            break;
+	    case AST_GE:
+            result = binaryOperation(TAC_GE, code[0], code[1]);
+            break;
+	    case AST_LE:
+            result = binaryOperation(TAC_LE, code[0], code[1]);
+            break;
+	    case AST_DIF:
+            result = binaryOperation(TAC_DIF, code[0], code[1]);
+            break;
+	    case AST_AND:
+            result = binaryOperation(TAC_AND, code[0], code[1]);
+            break;
+	    case AST_OR:
+            result = binaryOperation(TAC_OR, code[0], code[1]);
+            break;
+	    case AST_NOT:
+            result = tacJoin(code[0], tacCreate(TAC_NOT, makeTemp(), code[0] ? code[0]->res : 0, 0));
+            break;
         default:
             result = tacJoin(code[0], tacJoin(code[1], tacJoin(code[2], code[3])));
             break;
     }
 
     return result;
+}
+
+TAC *binaryOperation(int opcode, TAC *code0, TAC *code1){
+
+    HASH_NODE *op1 = code0->res ? code0->res : 0;
+    HASH_NODE *op2 = code1->res ? code1->res : 0;
+
+    return tacJoin(tacJoin(code0, code1), tacCreate(opcode, makeTemp(), op1, op2));
 }

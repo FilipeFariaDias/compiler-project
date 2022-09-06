@@ -7,32 +7,31 @@
 #define TAC_SYMBOL  1
 #define TAC_SUM     2
 #define TAC_DEC     3
+#define TAC_DOT     4
+#define TAC_DIV     5
+#define TAC_GREAT   6
+#define TAC_LESS    7
+#define TAC_GE      8
+#define TAC_LE      9
+#define TAC_EQ      10
+#define TAC_DIF     11
+#define TAC_AND     12
+#define TAC_OR      13
+#define TAC_NOT     14
 
 /* Não sei se todos esses defines são necessários, conferir
-#define TAC_MOVE 4
-#define TAC_MUL 5
-#define TAC_DIV 6
-#define TAC_GREAT 7
-#define TAC_LESS 8
-#define TAC_GE 9
-#define TAC_LE 10
-#define TAC_EQ 11
-#define TAC_DIF 12
-#define TAC_AND 13
-#define TAC_OR 14
-#define TAC_NOT 15
-#define TAC_LABEL 16
-#define TAC_BEGINFUN 17
-#define TAC_ARGPUSH 18
-#define TAC_ENDFUN 19
-#define TAC_IFZ 20
-#define TAC_JUMP 21
-#define TAC_CALL 22
-#define TAC_ARG 23
-#define TAC_RET 24
-#define TAC_PRINT 25
-#define TAC_READ 26
-#define TAC_VEC 27
+#define TAC_LABEL 15
+#define TAC_BEGINFUN 16
+#define TAC_ARGPUSH 17
+#define TAC_ENDFUN 18
+#define TAC_IFZ 19
+#define TAC_JUMP 20
+#define TAC_CALL 21
+#define TAC_ARG 22
+#define TAC_RET 23
+#define TAC_PRINT 24
+#define TAC_READ 25
+#define TAC_VEC 26
 */
 
 typedef struct tac_node{
