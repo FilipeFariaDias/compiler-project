@@ -18,19 +18,19 @@
 #define TAC_AND     12
 #define TAC_OR      13
 #define TAC_NOT     14
+#define TAC_LABEL   15
+#define TAC_JFZ     19
+#define TAC_JUMP    20
+#define TAC_RET     23
+#define TAC_PRINT   24
+#define TAC_READ    25
 
 /* Não sei se todos esses defines são necessários, conferir
-#define TAC_LABEL 15
 #define TAC_BEGINFUN 16
 #define TAC_ARGPUSH 17
 #define TAC_ENDFUN 18
-#define TAC_IFZ 19
-#define TAC_JUMP 20
 #define TAC_CALL 21
 #define TAC_ARG 22
-#define TAC_RET 23
-#define TAC_PRINT 24
-#define TAC_READ 25
 #define TAC_VEC 26
 */
 

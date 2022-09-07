@@ -3,6 +3,9 @@
 #include "tac.h"
 
 TAC *binaryOperation(int opcode, TAC *code0, TAC *code1);
+TAC *createIf(TAC *code0, TAC *code1);
+TAC *createIfElse(TAC *code0, TAC *code1, TAC *code2);
+TAC *createWhile(TAC *code0, TAC *code1);
 
 TAC* tacCreate(int type, HASH_NODE *res, HASH_NODE *op1, HASH_NODE *op2){
     TAC *newtac = (TAC*) calloc(1, sizeof(TAC));
@@ -32,6 +35,57 @@ void tacPrint(TAC *tac){
             break;
         case TAC_DEC:
             fprintf(stderr, "TAC_DEC");
+            break;
+        case TAC_DOT:
+            fprintf(stderr, "TAC_DOT");
+            break;
+        case TAC_DIV:
+            fprintf(stderr, "TAC_DIV");
+            break;
+        case TAC_GREAT:
+            fprintf(stderr, "TAC_GREAT");
+            break;
+        case TAC_LESS:
+            fprintf(stderr, "TAC_LESS");
+            break;
+        case TAC_GE:
+            fprintf(stderr, "TAC_GE");
+            break;
+        case TAC_LE:
+            fprintf(stderr, "TAC_LE");
+            break;
+        case TAC_EQ:
+            fprintf(stderr, "TAC_EQ");
+            break;
+        case TAC_DIF:
+            fprintf(stderr, "TAC_DIF");
+            break;
+        case TAC_AND:
+            fprintf(stderr, "TAC_AND");
+            break;
+        case TAC_OR:
+            fprintf(stderr, "TAC_OR");
+            break;
+        case TAC_NOT:
+            fprintf(stderr, "TAC_NOT");
+            break;
+        case TAC_LABEL:
+            fprintf(stderr, "TAC_LABEL");
+            break;
+        case TAC_JFZ:
+            fprintf(stderr, "TAC_JFZ");
+            break;
+        case TAC_JUMP:
+            fprintf(stderr, "TAC_JUMP");
+            break;
+        case TAC_RET:
+            fprintf(stderr, "TAC_RET");
+            break;
+        case TAC_PRINT:
+            fprintf(stderr, "TAC_PRINT");
+            break;
+        case TAC_READ:
+            fprintf(stderr, "TAC_READ");
             break;
         default:
             fprintf(stderr, "TAC_UNKNOWN");
@@ -116,6 +170,27 @@ TAC* generateCode(AST *node){
 	    case AST_NOT:
             result = tacJoin(code[0], tacCreate(TAC_NOT, makeTemp(), code[0] ? code[0]->res : 0, 0));
             break;
+        case AST_PRINT:
+            result = code[0];
+            break;
+        case AST_PRINTLST:
+            result = tacJoin(tacJoin(code[0], tacCreate(TAC_PRINT, code[0] ? code[0]->res : 0, 0, 0)), code[1]);
+            break;
+        case AST_READ:
+            result = tacCreate(TAC_READ, node->symbol, 0, 0);
+            break;
+        case AST_RETURN:
+            result = tacJoin(code[0], tacCreate(TAC_RET, code[0] ? code[0]->res : 0, 0, 0));
+            break;
+        case AST_IF:
+            result = createIf(code[0], code[1]);
+            break;
+        case AST_IFELSE:
+            result = createIfElse(code[0], code[1], code[2]);
+            break;
+        case AST_WHILE:
+            result = createWhile(code[0], code[1]);
+            break;
         default:
             result = tacJoin(code[0], tacJoin(code[1], tacJoin(code[2], code[3])));
             break;
@@ -130,4 +205,45 @@ TAC *binaryOperation(int opcode, TAC *code0, TAC *code1){
     HASH_NODE *op2 = code1->res ? code1->res : 0;
 
     return tacJoin(tacJoin(code0, code1), tacCreate(opcode, makeTemp(), op1, op2));
+}
+
+TAC *createIf(TAC *code0, TAC *code1){
+    TAC *jumptac = 0;
+    TAC *labeltac = 0;
+    HASH_NODE *newlabel = 0;
+
+    newlabel = makeLabel();
+
+    jumptac = tacCreate(TAC_JFZ, newlabel, code0->res, 0);
+    jumptac->prev = code0;
+    labeltac = tacCreate(TAC_LABEL, newlabel, 0, 0);
+    labeltac->prev = code1;
+
+    return tacJoin(jumptac, labeltac);
+}
+
+TAC *createIfElse(TAC *code0, TAC *code1, TAC *code2){
+    HASH_NODE *labelIf = makeLabel();
+    HASH_NODE *labeElse = makeLabel();
+    
+    TAC *tacjfalse = tacCreate(TAC_JFZ, labelIf, code0 ? code0->res : 0, 0);
+    TAC *tacjmp = tacCreate(TAC_JUMP, labeElse, 0, 0);
+    
+    TAC *tacLabelIf = tacCreate(TAC_LABEL, labelIf, 0, 0);
+    TAC *tacLabelElse = tacCreate(TAC_LABEL, labeElse, 0, 0);
+
+    return tacJoin(code0, tacJoin(tacjfalse, tacJoin(code1, tacJoin(tacjmp, tacJoin(tacLabelIf, tacJoin(code2, tacLabelElse))))));
+}
+
+TAC *createWhile(TAC *code0, TAC *code1){
+    HASH_NODE *labelStartLoop = makeLabel();
+    HASH_NODE *labelEndLoop = makeLabel();
+    
+    TAC *tacEnd = tacCreate(TAC_JFZ, labelEndLoop, code0 ? code0->res : 0, 0);
+    TAC *tacStart = tacCreate(TAC_JUMP, labelStartLoop, 0, 0);
+    
+    TAC *tacLabelStartLoop = tacCreate(TAC_LABEL, labelStartLoop, 0, 0);
+    TAC *tacLabelEndLoop = tacCreate(TAC_LABEL, labelEndLoop, 0, 0);
+
+    return tacJoin(tacLabelStartLoop, tacJoin(code0, tacJoin(tacEnd, tacJoin(code1, tacJoin(tacStart, tacLabelEndLoop)))));
 }
