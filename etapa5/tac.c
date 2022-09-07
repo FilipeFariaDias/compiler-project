@@ -87,6 +87,33 @@ void tacPrint(TAC *tac){
         case TAC_READ:
             fprintf(stderr, "TAC_READ");
             break;
+        case TAC_FUNC:
+            fprintf(stderr, "TAC_FUNC");
+            break;
+        case TAC_ARGS:
+            fprintf(stderr, "TAC_ARGS");
+            break;
+        case TAC_VEC:
+            fprintf(stderr, "TAC_VEC");
+            break;
+        case TAC_VECCOPY:
+            fprintf(stderr, "TAC_VECCOPY");
+            break;
+        case TAC_COPY:
+            fprintf(stderr, "TAC_COPY");
+            break;
+        case TAC_INITFUN:
+            fprintf(stderr, "TAC_INITFUN");
+            break;
+        case TAC_PARAMFUN:
+            fprintf(stderr, "TAC_PARAMFUN");
+            break;
+        case TAC_DECVEC:
+            fprintf(stderr, "TAC_DECVEC");
+            break;
+        case TAC_VECELEM:
+            fprintf(stderr, "TAC_VECELEM");
+            break;
         default:
             fprintf(stderr, "TAC_UNKNOWN");
             break;
@@ -190,6 +217,38 @@ TAC* generateCode(AST *node){
             break;
         case AST_WHILE:
             result = createWhile(code[0], code[1]);
+            break;
+        case AST_ATTR:
+            result = tacJoin(code[0],tacCreate(TAC_COPY, node->symbol, code[0] ? code[0]->res : 0, 0));
+            break;
+        case AST_FUNC:
+            result = tacJoin(code[0], tacCreate(TAC_FUNC, makeTemp(), node->symbol, 0));
+            break;
+        case AST_ARGUMENT:
+            result = tacJoin(tacJoin(code[0], tacCreate(TAC_ARGS, code[0] ? code[0]->res : 0, 0, 0)), code[1]);
+            break;
+        case AST_VEC:
+            result = tacJoin(code[0], tacCreate(TAC_VEC, makeTemp(), node->symbol, code[0] ? code[0]->res : 0));
+            break;
+        case AST_VECATTR:
+            result = tacJoin(tacJoin(code[0], code[1]), tacCreate(TAC_VECCOPY, node->symbol, code[1] ? code[1]->res : 0, code[0] ? code[0]->res : 0)); 
+            break;
+        case AST_DECVAR:
+            result = tacJoin(code[1], tacCreate(TAC_COPY, node->symbol, code[1] ? code[1]->res : 0, 0));
+            break;
+        case AST_DECFUNC:
+            result = tacJoin(tacJoin(tacJoin(tacJoin(tacCreate(TAC_INITFUN, tacCreate(TAC_SYMBOL, node->symbol, 0, 0)->res, 0, 0), code[0]), code[1]), code[2]), tacCreate(TAC_ENDFUN, tacCreate(TAC_SYMBOL, node->symbol, 0, 0)->res, 0, 0));
+            break;
+        case AST_PARAMINIT:
+        case AST_PARAM:
+            result = tacJoin(code[3], tacJoin(tacCreate(TAC_PARAMFUN, node->symbol, 0, 0), code[1]));
+            break;
+        case AST_DECVEC:
+            result = tacJoin(tacCreate(TAC_DECVEC, node->symbol, code[2] ? code[2]->res : 0, 0), code[2]); 
+            break;
+        case AST_VECINIT:
+        case AST_VECELEMENTS:
+            result = tacJoin(tacCreate(TAC_VECELEM, code[0] ? code[0]->res : 0, 0, 0), code[1]);
             break;
         default:
             result = tacJoin(code[0], tacJoin(code[1], tacJoin(code[2], code[3])));

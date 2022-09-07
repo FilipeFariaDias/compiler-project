@@ -19,19 +19,23 @@
 #define TAC_OR      13
 #define TAC_NOT     14
 #define TAC_LABEL   15
+#define TAC_FUNC    16
+#define TAC_ARGS    17
+#define TAC_INITFUN 18
 #define TAC_JFZ     19
 #define TAC_JUMP    20
+#define TAC_DECVEC  21
+#define TAC_VECELEM 22
 #define TAC_RET     23
 #define TAC_PRINT   24
 #define TAC_READ    25
+#define TAC_VEC     26
+#define TAC_COPY    27
+#define TAC_VECCOPY 28
+#define TAC_ENDFUN  29
+#define TAC_PARAMFUN  30
 
 /* Não sei se todos esses defines são necessários, conferir
-#define TAC_BEGINFUN 16
-#define TAC_ARGPUSH 17
-#define TAC_ENDFUN 18
-#define TAC_CALL 21
-#define TAC_ARG 22
-#define TAC_VEC 26
 */
 
 typedef struct tac_node{
