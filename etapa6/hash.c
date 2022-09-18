@@ -85,7 +85,7 @@ HASH_NODE * makeTemp(){
 	static int serialNumber = 0;
 	static char buffer[256];
 	sprintf(buffer, "_temp%d", serialNumber++);
-    HASH_NODE * node = hashInsert(SYMBOL_VAR, buffer);
+    HASH_NODE * node = hashInsert(SYMBOL_VARIABLE, buffer);
     node->datatype = datatype;
 	return node;
 }
