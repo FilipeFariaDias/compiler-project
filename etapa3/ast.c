@@ -180,7 +180,6 @@ void decompileAST(AST *node, FILE *file){
       break;
 
     case AST_CMDLST :
-      fprintf(file, "  ");
       decompileAST(node->sons[0], file);
       decompileAST(node->sons[1], file);
       break;
