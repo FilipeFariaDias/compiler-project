@@ -2,6 +2,7 @@
 	
    #include "hash.h"
    #include "ast.h"
+   #include "semantic.h"
 	
    AST *astFinal;
    int yyerror();
@@ -71,7 +72,11 @@
 
 %%
 
-programa: lista_declaracoes						{ astFinal = $$; astPrint(0, astFinal); }
+programa: lista_declaracoes						{ 
+													astFinal = $$; 
+													astPrint(0, astFinal); 
+													checkSemanticAnalysis(astFinal); 
+												}
 	;
 
 lista_declaracoes: declaracoes lista_declaracoes			 { $$ = astCreate(AST_LDEC, 0, $1, $2, 0, 0); }

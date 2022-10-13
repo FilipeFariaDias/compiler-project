@@ -2,6 +2,8 @@
 	
    #include "hash.h"
    #include "ast.h"
+   #include "semantic.h"
+   #include "tac.h"
 	
    AST *astFinal;
    int yyerror();
@@ -71,7 +73,12 @@
 
 %%
 
-programa: lista_declaracoes						{ astFinal = $$; astPrint(0, astFinal); }
+programa: lista_declaracoes						{ 
+													astFinal = $$; 
+													astPrint(0, astFinal); 
+													checkSemanticAnalysis(astFinal);
+													tacPrintBackwards(generateCode($1));
+												}
 	;
 
 lista_declaracoes: declaracoes lista_declaracoes			 { $$ = astCreate(AST_LDEC, 0, $1, $2, 0, 0); }
@@ -174,3 +181,4 @@ int yyerror()
 	fprintf(stderr, "Erro na linha %d. \n", getLineNumber());
 	exit(3);
 }			
+

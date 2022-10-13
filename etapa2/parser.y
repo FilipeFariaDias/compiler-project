@@ -131,7 +131,7 @@ exp: TK_IDENTIFIER
 	| exp OPERATOR_DIF exp
 	| exp '&' exp
 	| exp '|' exp
-	| exp '~' exp
+	| '~' exp
 	| '(' exp ')'
 	;
 			
