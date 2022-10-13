@@ -16,7 +16,7 @@ int main(int argc, char *argv[]){
 	FILE *output;
 	
 	if(argc < 3){
-		fprintf(stderr,"Call: ./etapa3 input.txt output.txt \n");
+		fprintf(stderr,"Call: ./etapa5 input.txt output.txt \n");
 		exit(1);
 	}
 	if(!(file(argv[1]))){
